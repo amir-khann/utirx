@@ -67,26 +67,28 @@ const Request = () => {
       setLoading(false);
     });
   }, []);
-  return loading ? (
+  return (
     <Container>
-      <p>Loading...</p>
+      {loading ? (
+        <p>Loading...</p>
+      ) : step === 0 ? (
+        <Question
+          question={questions[index]}
+          incrementIndex={incrementIndex}
+          redirect={history}
+        />
+      ) : step === 1 ? (
+        <Allergies incrementStep={incrementStep} />
+      ) : step === 2 ? (
+        <Consent history={history} incrementStep={incrementStep} />
+      ) : step === 3 ? (
+        <PersonalInfo incrementStep={incrementStep} />
+      ) : step === 4 ? (
+        <Payment incrementStep={incrementStep} />
+      ) : (
+        <Success history={history} />
+      )}
     </Container>
-  ) : step === 0 ? (
-    <Question
-      question={questions[index]}
-      incrementIndex={incrementIndex}
-      redirect={history}
-    />
-  ) : step === 1 ? (
-    <Allergies incrementStep={incrementStep} />
-  ) : step === 2 ? (
-    <Consent history={history} incrementStep={incrementStep} />
-  ) : step === 3 ? (
-    <PersonalInfo incrementStep={incrementStep} />
-  ) : step === 4 ? (
-    <Payment incrementStep={incrementStep} />
-  ) : (
-    <Success history={history}/>
   );
 };
 

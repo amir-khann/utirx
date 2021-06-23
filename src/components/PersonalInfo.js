@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import config from "../config";
 import MapComponent from "./MapComponent";
-import { Input, Button, Upload, List } from "antd";
+import { Input, Button, Upload, List, Row, Col } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 
 const PersonalInfo = (props) => {
@@ -22,7 +22,7 @@ const PersonalInfo = (props) => {
     setStepOne({ ...temp });
   };
   const changeStepTwo = (name, value) => {
-    console.log(value)
+    console.log(value);
     let temp = stepTwo;
     temp[name] = value;
     setStepTwo({ ...temp });
@@ -78,37 +78,36 @@ const PersonalInfo = (props) => {
         <div className={step === 1 ? "tab active" : "tab"}>Step 2</div>
         <div className={step === 2 ? "tab active" : "tab"}>Step 3</div>
       </div>
-      <div className="tab-content">
+      <Col span={24}>
         {step === 0 && (
-          <div>
-            <form>
-              <div>
-                <label>Name</label>
-                <Input
-                  type="text"
-                  onChange={(e) => changeForm(e.target.name, e.target.value)}
-                  name="name"
-                />
-              </div>
-              <div>
-                <label>Date of Birth</label>
-                <Input
-                  type="date"
-                  onChange={(e) => changeForm(e.target.name, e.target.value)}
-                  name="dob"
-                />
-              </div>
-              <Button loading={loading} onClick={(e) => submitStepOne(e)}>
-                Submit
-              </Button>
-            </form>
-          </div>
+          <form>
+            <Row>
+              <label className={"label"}>Name</label>
+              <Input
+                placeholder={"Full Name"}
+                type="text"
+                onChange={(e) => changeForm(e.target.name, e.target.value)}
+                name="name"
+              />
+            </Row>
+            <Row>
+              <label className={"label"}>Date of Birth</label>
+              <Input
+                type="date"
+                onChange={(e) => changeForm(e.target.name, e.target.value)}
+                name="dob"
+              />
+            </Row>
+            <Button loading={loading} onClick={(e) => submitStepOne(e)}>
+              Submit
+            </Button>
+          </form>
         )}
         {step === 1 && (
           <div>
             <form>
               <div>
-                <label>Email</label>
+                <label className={"label"}>Email</label>
                 <Input
                   type="email"
                   name="email"
@@ -116,7 +115,7 @@ const PersonalInfo = (props) => {
                 />
               </div>
               <div>
-                <label>Phone Number</label>
+                <label className={"label"}>Phone Number</label>
                 <Input
                   type="text"
                   name="phoneNumber"
@@ -124,7 +123,7 @@ const PersonalInfo = (props) => {
                 />
               </div>
               <div>
-                <label>Address</label>
+                <label className={"label"}>Address</label>
                 <Input
                   type="text"
                   name="address"
@@ -132,7 +131,7 @@ const PersonalInfo = (props) => {
                 />
               </div>
               <div>
-                <label>Zip Code</label>
+                <label className={"label"}>Zip Code</label>
                 <Input
                   type="text"
                   name="zipcode"
@@ -140,9 +139,13 @@ const PersonalInfo = (props) => {
                 />
               </div>
               <div>
-                <label>Photo</label>
+                <label className={"label"}>Photo</label>
                 <div>
-                  <Upload beforeUpload={(file) => changeStepTwo("identityPhoto", file)} >
+                  <Upload
+                    beforeUpload={(file) =>
+                      changeStepTwo("identityPhoto", file)
+                    }
+                  >
                     <Button icon={<UploadOutlined />}>Click to Select</Button>
                   </Upload>
                 </div>
@@ -164,20 +167,26 @@ const PersonalInfo = (props) => {
           </div>
         )}
         {step === 2 && (
-          <div style={{ display: "flex", maxWidth: '100vw' }}>
-            <div>
-                <div style={{width: '50vw', maxWidth:'50vw', height: '70vh', overflow: 'scroll'}}>
-                  <List dataSource={pharmacies} renderItem={item => (
-                      <List.Item onClick={() => setPharmacy(item)}>
-                          <List.Item.Meta title={item.name} description={item.formatted_address}/> ̰
-                      </List.Item>
-                    )
-                  }/>
-                  </div>
+          <div style={{ display: "flex" }}>
+            <div style={{  }}>
+              <div style={{ marginRight: "20px", height:"50vh", overflow: "scroll" }}>
+                <List
+                  dataSource={pharmacies}
+                  renderItem={(item) => (
+                    <List.Item onClick={() => setPharmacy(item)}>
+                      <List.Item.Meta
+                        title={item.name}
+                        description={item.formatted_address}
+                      />
+                       ̰
+                    </List.Item>
+                  )}
+                />
+              </div>
               OR
-              <form>
+              <form style={{marginRight:'20px'}}>
                 <div>
-                  <label>Pharmacy Name</label>
+                  <label className={"label"}>Pharmacy Name</label>
                   <Input
                     onChange={(e) =>
                       changeStepThree(e.target.name, e.target.value)
@@ -186,7 +195,7 @@ const PersonalInfo = (props) => {
                   />
                 </div>
                 <div>
-                  <label>Pharmacy Address</label>
+                  <label className={"label"}>Pharmacy Address</label>
                   <Input
                     onChange={(e) =>
                       changeStepThree(e.target.name, e.target.value)
@@ -195,16 +204,17 @@ const PersonalInfo = (props) => {
                   />
                 </div>
               </form>
-              <Button type="primary" onClick={() => selectPharmacy()}>Next</Button>
+              <Button type="primary" onClick={() => selectPharmacy()}>
+                Next
+              </Button>
             </div>
             <MapComponent
-                style={{flex: '1 1 auto'}}
               lat={pharmacy.geometry.location.lat}
               lng={pharmacy.geometry.location.lng}
             />
           </div>
         )}
-      </div>
+      </Col>
     </div>
   );
 };

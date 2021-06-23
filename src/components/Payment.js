@@ -7,27 +7,25 @@ import {
   useElements,
 } from "@stripe/react-stripe-js";
 import { Button } from "antd";
-import Container from './Container';
 
 const createOptions = () => {
   return {
     style: {
       base: {
-        fontSize: '20px',
-        color: '#424770',
-        fontFamily: 'Open Sans, sans-serif',
-        letterSpacing: '0.025em',
-        '::placeholder': {
-          color: '#aab7c4',
+        fontSize: "20px",
+        color: "#424770",
+        fontFamily: "Open Sans, sans-serif",
+        letterSpacing: "0.025em",
+        "::placeholder": {
+          color: "#aab7c4",
         },
       },
       invalid: {
-        color: '#c23d4b',
+        color: "#c23d4b",
       },
-    }
-  }
+    },
+  };
 };
-
 
 const Form = (props) => {
   const stripe = useStripe();
@@ -43,8 +41,8 @@ const Form = (props) => {
     props.incrementStep({ payment: token });
   };
   return (
-    <Container>
-      <CardElement options={{...createOptions()}}/>
+    <div className={'card'}>
+      <CardElement options={{ ...createOptions() }} />
       <Button
         type="primary"
         disabled={!stripe}
@@ -52,7 +50,7 @@ const Form = (props) => {
       >
         Pay
       </Button>
-    </Container>
+    </div>
   );
 };
 
