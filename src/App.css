@@ -1,0 +1,44 @@
+.tabs {
+  display: flex;
+}
+.tabs .tab {
+  padding: 0.5%;
+  cursor: pointer;
+}
+
+.active {
+  color: red;
+}
+
+.ant-layout-header {
+  color: #fff !important;
+}
+.ant-layout-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  line-height: 120px;
+  background: #fff;
+}
+
+.ant-layout-footer {
+  position: absolute;
+  width: 100vw;
+  bottom: 0;
+}
+
+.question {
+  border-style: dashed;
+  border-color: #001529;
+  border-width: 1px;
+  margin-top: 24px;
+  padding: 24px;
+  min-width: 50vw;
+  border-radius: 20px;
+  color: #001529;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.ant-button {
+  background-color: #001529;
+}
