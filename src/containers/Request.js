@@ -54,8 +54,8 @@ const Request = () => {
         ...apiRequest,
         ...data,
       });
-      setRequest({ ...apiRequest, ...{ data: response.data } });
-      await axios.post(`${config.baseUrl}request`, { ...apiRequest, ...data });
+      setRequest({ ...apiRequest, ...response.data });
+      await axios.post(`${config.baseUrl}request`, { ...apiRequest, ...response.data  });
     }
     console.log({ ...apiRequest, ...data });
     setStep(step + 1);
