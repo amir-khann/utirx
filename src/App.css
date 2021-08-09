@@ -134,3 +134,7 @@ b{
   text-align: center;
   justify-content: center;
 }
+.section {
+  margin-top: 50px;
+  margin-bottom: 10px;
+}
