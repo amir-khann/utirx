@@ -70,3 +70,67 @@ small {
       borderColor: theme.palette.primary.main,
     }, */
 }
+
+/* Language: css */
+/* sticky header */
+.sticky-header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #FFF;
+  z-index: 1;
+}
+
+.sticky-header + .content{
+  margin-top: 50px;
+}
+
+/* display: flex; */
+.flex {
+  display: flex;
+}
+
+/* container */
+.container {
+  max-width: 75%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* space-between */
+.justify-space-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+b{
+  display: block;
+}
+
+.checked-list {
+    list-style: none;
+}
+  
+.checked-list li:before {
+    content: '✓';
+    width: 15px;
+    height: 10px;
+    margin-right: 5px;
+    color: #FFF;
+    background-color: #000;
+    border-radius: 50%;
+}
+
+.right {
+  flex-basis: 50%;
+}
+
+.column {
+  flex-direction: column;
+}
+
+.align-center {
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
