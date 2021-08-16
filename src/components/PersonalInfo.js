@@ -15,6 +15,11 @@ const PersonalInfo = (props) => {
   const [loading, setLoading] = useState(false);
   const [pharmacies, setPharmacies] = useState([]);
   const [pharmacy, setPharmacy] = useState({});
+  const [error, setError] = useState("");
+  const [manualPharmacy, setManualPharmacy] = useState({
+    name: "",
+    address: "",
+  });
 
   const changeForm = (name, value) => {
     let temp = stepOne;
@@ -31,14 +36,20 @@ const PersonalInfo = (props) => {
     try {
       e.preventDefault();
       setLoading(true);
-      const { data } = await axios.post(
-        `${config.baseUrl}request/get-request-by-name`,
-        stepOne
-      );
-      if (!data.length) {
-        setStep(step + 1);
+      if (!error) {
+        const { data } = await axios.post(
+          `${config.baseUrl}request/get-request-by-name`,
+          stepOne
+        );
+        if (!data.length) {
+          setStep(step + 1);
+        } else {
+          setError(
+            "You already have applied for a prescription in last two months. If you still want to continue submit anyway."
+          );
+        }
       } else {
-        alert("You already have applied for a prescription in last two months");
+        setStep(step + 1);
       }
       setLoading(false);
     } catch (err) {
@@ -60,16 +71,39 @@ const PersonalInfo = (props) => {
     }
   };
   const changeStepThree = (name, value) => {
-    let pharmacy = stepThree.pharmacy;
-    pharmacy[name] = value;
-    setStepThree({ ...{ pharmacy } });
+    console.log(name, value);
+    let temp = stepThree.pharmacy;
+    temp[name] = value;
+    setManualPharmacy(temp);
   };
   const selectPharmacy = () => {
-    let selectedPharmacy = stepThree.pharmacy;
-    selectedPharmacy.name = pharmacy.name;
-    selectedPharmacy.address = pharmacy.formatted_address;
-    setStepThree({ ...{ pharmacy: selectedPharmacy } });
-    props.incrementStep({ ...stepOne, ...stepTwo, ...stepThree });
+    if (manualPharmacy.name && manualPharmacy.address) {
+      setStepThree({ ...{ pharmacy: manualPharmacy } });
+      props.incrementStep({
+        ...stepOne,
+        ...stepTwo,
+        ...{ pharmacy: manualPharmacy },
+      });
+    } else {
+      const { name, formatted_address } = pharmacy;
+      props.incrementStep({
+        ...stepOne,
+        ...stepTwo,
+        ...{ pharmacy: { name, address: formatted_address } },
+      });
+    }
+  };
+
+  const addFiles = ({ file }) => {
+    let reader = new FileReader();
+    reader.onload = (e) => {
+      let pictures = stepTwo.identityPictures || [];
+      setStepTwo({
+        ...stepTwo,
+        ...{ identityPictures: [...pictures, { url: e.target.result }] },
+      });
+    };
+    reader.readAsDataURL(file.originFileObj);
   };
   return (
     <div>
@@ -98,6 +132,7 @@ const PersonalInfo = (props) => {
                 name="dob"
               />
             </Row>
+            <p className="error-message">{error}</p>
             <Button loading={loading} onClick={(e) => submitStepOne(e)}>
               Submit
             </Button>
@@ -141,11 +176,7 @@ const PersonalInfo = (props) => {
               <div>
                 <label className={"label"}>Photo</label>
                 <div>
-                  <Upload
-                    beforeUpload={(file) =>
-                      changeStepTwo("identityPhoto", file)
-                    }
-                  >
+                  <Upload onChange={(e) => addFiles(e)}>
                     <Button icon={<UploadOutlined />}>Click to Select</Button>
                   </Upload>
                 </div>
@@ -168,8 +199,14 @@ const PersonalInfo = (props) => {
         )}
         {step === 2 && (
           <div style={{ display: "flex" }}>
-            <div style={{  }}>
-              <div style={{ marginRight: "20px", height:"50vh", overflow: "scroll" }}>
+            <div style={{}}>
+              <div
+                style={{
+                  marginRight: "20px",
+                  height: "50vh",
+                  overflow: "scroll",
+                }}
+              >
                 <List
                   dataSource={pharmacies}
                   renderItem={(item) => (
@@ -184,7 +221,7 @@ const PersonalInfo = (props) => {
                 />
               </div>
               OR
-              <form style={{marginRight:'20px'}}>
+              <form style={{ marginRight: "20px" }}>
                 <div>
                   <label className={"label"}>Pharmacy Name</label>
                   <Input

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import {
   CardElement,
@@ -28,10 +28,12 @@ const createOptions = () => {
 };
 
 const Form = (props) => {
+  const [loading, setLoading] = useState(false);
   const stripe = useStripe();
   const elements = useElements();
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true);
     const { error, token } = await stripe.createToken(
       elements.getElement(CardElement)
     );
@@ -41,15 +43,18 @@ const Form = (props) => {
     props.incrementStep({ payment: token });
   };
   return (
-    <div className={'card'}>
-      <CardElement options={{ ...createOptions() }} />
-      <Button
-        type="primary"
-        disabled={!stripe}
-        onClick={(event) => handleSubmit(event)}
-      >
-        Pay
-      </Button>
+    <div className="flex align-center vh-90">
+      <div className={"card"}>
+        <CardElement options={{ ...createOptions() }} />
+        <Button
+          type="primary"
+          disabled={!stripe || loading}
+          onClick={(event) => handleSubmit(event)}
+          loading={loading}
+        >
+          Pay
+        </Button>
+      </div>
     </div>
   );
 };

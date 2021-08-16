@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import LandingPage from "./containers/LandingPage";
 import Request from "./containers/Request";
 import Error from "./containers/Error";
-import "antd/dist/antd.css";
+import "antd/dist/antd.less";
 
 function App() {
   return (
