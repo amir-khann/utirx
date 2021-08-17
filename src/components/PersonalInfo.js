@@ -96,6 +96,8 @@ const PersonalInfo = (props) => {
 
   const addFiles = ({ file }) => {
     let reader = new FileReader();
+    console.log(file);
+    console.log('code running');
     reader.onload = (e) => {
       let pictures = stepTwo.identityPictures || [];
       setStepTwo({
@@ -176,7 +178,14 @@ const PersonalInfo = (props) => {
               <div>
                 <label className={"label"}>Photo</label>
                 <div>
-                  <Upload onChange={(e) => addFiles(e)}>
+                  <Upload
+                    onChange={(e) => addFiles(e)}
+                    customRequest={({ file, onSuccess }) => {
+                      setTimeout(() => {
+                        onSuccess("ok");
+                      }, 0);
+                    }}
+                  >
                     <Button icon={<UploadOutlined />}>Click to Select</Button>
                   </Upload>
                 </div>

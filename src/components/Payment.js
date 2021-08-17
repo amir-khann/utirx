@@ -60,7 +60,7 @@ const Form = (props) => {
 };
 
 const Payment = (props) => {
-  const stripePromise = loadStripe("pk_test_GGmbpC59S7YvSbhzLOUuBiV6");
+  const stripePromise = loadStripe(process.env.REACT_APP_STRIPE);
   return (
     <Elements stripe={stripePromise}>
       <Form incrementStep={props.incrementStep} />
