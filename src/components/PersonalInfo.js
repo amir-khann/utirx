@@ -49,15 +49,15 @@ const PersonalInfo = (props) => {
   const changeStepTwo = (name, value) => {
     console.log(value);
     let temp = stepTwo;
-    temp[name] = value; 
+    temp[name] = value;
     setStepTwo({ ...temp });
   };
   const submitStepOne = async (e) => {
     try {
       e.preventDefault();
       const errorsStepOne = vaidateNameAndDOB(stepOne);
-      console.log(errorsStepOne)
-      if(errorsStepOne.name || errorsStepOne.dob){
+      console.log(errorsStepOne);
+      if (errorsStepOne.name || errorsStepOne.dob) {
         setErrorStepOne(errorsStepOne);
         return;
       }
@@ -71,7 +71,7 @@ const PersonalInfo = (props) => {
           setStep(step + 1);
         } else {
           setError(
-            "You already have applied for a prescription in last two months. If you still want to continue submit anyway."
+            "This person seems to have received the prescription in the last two months. You may continue at your own risk, but the doctor may reject your prescription if your ID matches with the previously issued prescription record. Are you sure you did not receive the prescription in the last 2 months and want to continue?"
           );
         }
       } else {
@@ -83,11 +83,18 @@ const PersonalInfo = (props) => {
     }
   };
   const submitStepTwo = async (e) => {
-
     try {
       e.preventDefault();
       const errors = validateStepTwo(stepTwo);
-      if(errors.email || errors.phoneNumber || errors.street || errors.city || errors.state || errors.zipcode || error.identityPictures) {
+      if (
+        errors.email ||
+        errors.phoneNumber ||
+        errors.street ||
+        errors.city ||
+        errors.state ||
+        errors.zipcode ||
+        errors.identityPictures
+      ) {
         setErrorStepTwo(errors);
         return;
       }
@@ -158,7 +165,9 @@ const PersonalInfo = (props) => {
                 onChange={(e) => changeForm(e.target.name, e.target.value)}
                 name="name"
               />
-              {errorStepOne.name && (<small className="error-message">{errorStepOne.name}</small>)}
+              {errorStepOne.name && (
+                <small className="error-message">{errorStepOne.name}</small>
+              )}
             </Row>
             <Row>
               <label className={"label"}>Date of Birth</label>
@@ -167,7 +176,9 @@ const PersonalInfo = (props) => {
                 onChange={(e) => changeForm(e.target.name, e.target.value)}
                 name="dob"
               />
-              {errorStepOne.dob && (<small className="error-message">{errorStepOne.dob}</small>)}
+              {errorStepOne.dob && (
+                <small className="error-message">{errorStepOne.dob}</small>
+              )}
               {dateError && (
                 <small className="error-message">
                   You should be between the age of 18 and 65 years to continue.
@@ -194,7 +205,9 @@ const PersonalInfo = (props) => {
                   name="email"
                   onChange={(e) => changeStepTwo(e.target.name, e.target.value)}
                 />
-                {errorStepTwo.email && (<small className="error-message">{errorStepTwo.email}</small>)}
+                {errorStepTwo.email && (
+                  <small className="error-message">{errorStepTwo.email}</small>
+                )}
               </div>
               <div>
                 <label className={"label"}>Phone Number</label>
@@ -203,7 +216,11 @@ const PersonalInfo = (props) => {
                   name="phoneNumber"
                   onChange={(e) => changeStepTwo(e.target.name, e.target.value)}
                 />
-                {errorStepTwo.phoneNumber && (<small className="error-message">{errorStepTwo.phoneNumber}</small>)}
+                {errorStepTwo.phoneNumber && (
+                  <small className="error-message">
+                    {errorStepTwo.phoneNumber}
+                  </small>
+                )}
               </div>
               <div className="justify-space-between">
                 <div style={{ width: "40%" }}>
@@ -215,7 +232,11 @@ const PersonalInfo = (props) => {
                       changeStepTwo(e.target.name, e.target.value)
                     }
                   />
-                  {errorStepTwo.street && (<small className="error-message">{errorStepTwo.street}</small>)}
+                  {errorStepTwo.street && (
+                    <small className="error-message">
+                      {errorStepTwo.street}
+                    </small>
+                  )}
                 </div>
                 <div>
                   <label className={"label"}>City</label>
@@ -226,7 +247,9 @@ const PersonalInfo = (props) => {
                       changeStepTwo(e.target.name, e.target.value)
                     }
                   />
-                  {errorStepTwo.city && (<small className="error-message">{errorStepTwo.city}</small>)}
+                  {errorStepTwo.city && (
+                    <small className="error-message">{errorStepTwo.city}</small>
+                  )}
                 </div>
                 <div>
                   <label className={"label"}>State</label>
@@ -237,7 +260,11 @@ const PersonalInfo = (props) => {
                       changeStepTwo(e.target.name, e.target.value)
                     }
                   />
-                  {errorStepTwo.state && (<small className="error-message">{errorStepTwo.state}</small>)}
+                  {errorStepTwo.state && (
+                    <small className="error-message">
+                      {errorStepTwo.state}
+                    </small>
+                  )}
                 </div>
               </div>
               <div>
@@ -247,7 +274,11 @@ const PersonalInfo = (props) => {
                   name="zipcode"
                   onChange={(e) => changeStepTwo(e.target.name, e.target.value)}
                 />
-                {errorStepTwo.zipcode && (<small className="error-message">{errorStepTwo.zipcode}</small>)}
+                {errorStepTwo.zipcode && (
+                  <small className="error-message">
+                    {errorStepTwo.zipcode}
+                  </small>
+                )}
               </div>
               <div>
                 <label className={"label"}>Photo</label>
@@ -262,7 +293,11 @@ const PersonalInfo = (props) => {
                   >
                     <Button icon={<UploadOutlined />}>Click to Select</Button>
                   </Upload>
-                  {errorStepTwo.identityPictures && (<small className="error-message">{errorStepTwo.identityPictures}</small>)}
+                  {errorStepTwo.identityPictures && (
+                    <small className="error-message">
+                      {errorStepTwo.identityPictures}
+                    </small>
+                  )}
                 </div>
                 {/* <input
                   type="file"

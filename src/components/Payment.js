@@ -6,7 +6,9 @@ import {
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
-import { Button } from "antd";
+import { Button, Col, Row, Input, Typography } from "antd";
+
+const { Title } = Typography;
 
 const createOptions = () => {
   return {
@@ -16,9 +18,10 @@ const createOptions = () => {
         color: "#424770",
         fontFamily: "Open Sans, sans-serif",
         letterSpacing: "0.025em",
+        lineHeight: "60px",
         "::placeholder": {
           color: "#aab7c4",
-        },
+        }
       },
       invalid: {
         color: "#c23d4b",
@@ -29,26 +32,45 @@ const createOptions = () => {
 
 const Form = (props) => {
   const [loading, setLoading] = useState(false);
+  const [name, setName] = useState("");
   const stripe = useStripe();
   const elements = useElements();
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
     const { error, token } = await stripe.createToken(
-      elements.getElement(CardElement)
+      elements.getElement(CardElement),
+      {
+        name,
+      }
     );
     if (error) {
+      setLoading(false);
       return error;
     }
     props.incrementStep({ payment: token });
   };
+  const changeForm = (value) => {
+    setName(value);
+  };
   return (
-    <div className="flex align-center vh-90">
-      <div className={"card"}>
-        <CardElement options={{ ...createOptions() }} />
+    <div className="flex vh-90 card-details">
+      <div className={"card responsive m-t-10-p"}>
+        <Title level={2}>Card Details</Title>
+        <Col span={24}>
+          <Row>
+            <label className={"label"}>Name</label>
+            <Input
+              placeholder={"Full Name"}
+              type="text"
+              onChange={(e) => changeForm(e.target.value)}
+            />
+          </Row>
+        </Col>
+        <CardElement options={{ ...createOptions(), hidePostalCode: true }} />
         <Button
           type="primary"
-          disabled={!stripe || loading}
+          disabled={!stripe || loading || !name}
           onClick={(event) => handleSubmit(event)}
           loading={loading}
         >

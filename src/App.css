@@ -262,6 +262,11 @@ small {
 
 .error-message {
   color: #ff0000;
+  line-height: 20px;
+}
+
+form {
+  line-height: 30px;
 }
 
 .message-fl {
@@ -301,6 +306,10 @@ small {
 
 .consent {
   width: 50%;
+  margin-top: 10%;
+}
+
+.m-t-10-p {
   margin-top: 10%;
 }
 
