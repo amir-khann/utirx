@@ -22,12 +22,12 @@ const Allergies = (props) => {
     setAllergies(allergies.filter((i) => i !== item));
   };
   return (
-    <div className="flex vh-50">
+    <div className="flex responsive">
       <div className="interview">
         <Image src="allergies.svg" preview={false} width={"90%"} />
       </div>
-      <div className="flex column align-center vh-90 allergies">
-        <h2>Allergies</h2>
+      <div className="flex column vh-90 allergies">
+        <h2 className="title">Allergies</h2>
         <small>List down any allergies you may have</small>
         <br />
         <Input

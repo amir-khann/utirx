@@ -17,9 +17,9 @@
   color: #fff !important;
 }
 .ant-layout-content {
-  display: flex;
+  /* display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: center; */
   line-height: 50px;
   background: #fff;
 }
@@ -37,16 +37,24 @@
   overflow: hidden;
 }
 
+.questions {
+  width: 50%;
+}
+
+.questions div button {
+  width: 40%;
+}
+
 .question {
-  min-width: 50vw;
+  width: 100%;
   min-height: 90vh;
   display: flex;
-  align-items: center;
-  justify-content: center;
   flex-direction: column;
+  margin-top: 10%;
 }
-.question p{
-  font-size: 24px;
+.question p {
+  font-size: 36px;
+  margin-bottom: 0.2em;
 }
 .ant-button {
   background-color: #001529;
@@ -60,11 +68,11 @@ small {
 }
 
 .card {
-    padding-top:20px;
-    margin-top: 20px;
-    height: 50px;
-    width: 50vw;
-    /* paddingTop: theme.spacing(1) + 4,
+  padding-top: 20px;
+  margin-top: 20px;
+  height: 50px;
+  width: 50vw;
+  /* paddingTop: theme.spacing(1) + 4,
     marginTop: theme.spacing(1),
     border: "solid",
     borderRadius: theme.spacing(1) / 2,
@@ -84,11 +92,11 @@ small {
   position: fixed;
   top: 0;
   width: 100%;
-  background-color: #FFF;
+  background-color: #fff;
   z-index: 1;
 }
 
-.sticky-header + .content{
+.sticky-header + .content {
   margin-top: 50px;
 }
 
@@ -110,22 +118,26 @@ small {
   justify-content: space-between;
 }
 
-b{
+b {
   display: block;
 }
 
 .checked-list {
-    list-style: none;
+  list-style: none;
 }
-  
+
 .checked-list li:before {
-    content: '✓';
-    width: 15px;
-    height: 10px;
-    margin-right: 5px;
-    color: #FFF;
-    background-color: #000;
-    border-radius: 50%;
+  content: "✓";
+  width: 15px;
+  height: 10px;
+  margin-right: 5px;
+  color: #fff;
+  background-color: #000;
+  border-radius: 50%;
+}
+
+.left {
+  flex-basis: 50%;
 }
 
 .right {
@@ -173,7 +185,7 @@ b{
   align-items: center;
   justify-content: center;
   padding: 10px;
-  max-width: 100%;
+  width: 50%;
 }
 
 .allergies {
@@ -181,8 +193,10 @@ b{
   align-items: flex-start;
   width: 50%;
   text-align: left;
+  margin-top: 10%;
 }
-.allergies h2,small{
+.allergies h2,
+small {
   margin: 0;
   padding: 0;
 }
@@ -192,7 +206,9 @@ b{
 }
 .chips {
   display: flex;
-  max-width: 100%;
+  width: 100%;
+  height: auto;
+  flex-wrap: wrap;
 }
 .chip {
   display: flex;
@@ -202,7 +218,7 @@ b{
   justify-content: space-between;
   padding: 5px 10px;
   background: #6b63ff;
-  color: #FFF;
+  color: #fff;
   white-space: nowrap;
   width: auto;
 }
@@ -211,14 +227,14 @@ b{
   margin-right: 5px;
 }
 
-.chip .close-button{
+.chip .close-button {
   border: 1px solid gray;
   border-radius: 50%;
   height: 30px;
   width: 30px;
   text-align: center;
   padding: 0;
-  background: #FFF;
+  background: #fff;
   color: #6b63ff;
   cursor: pointer;
 }
@@ -227,23 +243,82 @@ b{
   width: 50%;
 }
 
-.error-content{
+.error-content {
   width: 50%;
   line-height: 30px;
 }
 
-.error-content p{
+.error-content p {
   padding: 0;
   margin: 0;
 }
 
 .error {
-  color: #FF0000;
+  color: #ff0000;
   padding: 0;
   margin: 0;
   font-size: 40px;
 }
 
 .error-message {
-  color: #FF0000;
+  color: #ff0000;
+}
+
+.message-fl {
+  color: #ff000090;
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+.message-fl::before {
+  content: "* ";
+}
+
+.logo-app {
+  color: #fff;
+}
+
+.logo-app:hover {
+  color: #fff;
+}
+.responsive {
+  max-width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.title {
+  font-size: 36px;
+}
+
+.helper-message {
+  font-size: 16px !important;
+  line-height: 16px;
+  color: rgb(73, 77, 85);
+  font-weight: 300;
+  margin-bottom: 20px !important;
+}
+
+.consent {
+  width: 50%;
+  margin-top: 10%;
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {
+  .responsive {
+    height: 100%;
+    max-width: 90%;
+  }
+  .interview {
+    display: none;
+  }
+  .questions, .allergies, .consent {
+    width: 100%;
+  }
+  .question p {
+    font-size: 28px;
+    margin-bottom: 0.2em;
+    text-align: justify;
+  }
+  
 }

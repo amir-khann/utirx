@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import _ from "lodash";
 import "../App.css";
 
 import Question from "../components/Question";
@@ -30,12 +31,18 @@ const Request = () => {
     } else {
       answers = [{ question, answer }];
     }
-    setRequest({ ...apiRequest, ...{ questions: answers } });
+    setRequest({ ...apiRequest, ...{ questions: _.uniqBy(answers, 'question') } });
     if (index + 1 === questions.length) {
       console.log(apiRequest);
       setStep(step + 1);
     } else {
       setIndex(index + 1);
+    }
+  };
+
+  const decrementIndex = () => {
+    if(index !== 0) {
+      setIndex(index - 1);
     }
   };
 
@@ -75,7 +82,9 @@ const Request = () => {
         <Question
           question={questions[index]}
           incrementIndex={incrementIndex}
+          decrementIndex={decrementIndex}
           redirect={history}
+          index={index}
         />
       ) : step === 1 ? (
         <Allergies incrementStep={incrementStep} />

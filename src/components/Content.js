@@ -15,6 +15,7 @@ const Content = ({ navigate }) => {
           </ul>
           <b>$19 visit with Gold membership* • $39 single visit</b>
           <b>Ages 18-65 • Female</b>
+          <b className="message-fl">This application is only available to Florida residents and visitors and prescription will be sent to Florida Pharmacies only.</b>
           <Button type="primary" style={{ minWidth: '200px', borderRadius: '5px', marginTop: '10px' }} onClick={() => navigate()}>Get Started</Button>
         </div>
         <div className="right">
