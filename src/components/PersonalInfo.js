@@ -100,7 +100,7 @@ const PersonalInfo = (props) => {
       }
       setLoading(true);
       const { data } = await axios.get(
-        `${config.baseUrl}/places/${stepTwo.street}, ${stepTwo.city}, ${stepTwo.state}`
+        `${config.baseUrl}places/${stepTwo.street}, ${stepTwo.city}, ${stepTwo.state}`
       );
       setPharmacies(data);
       setPharmacy(data[0]);
