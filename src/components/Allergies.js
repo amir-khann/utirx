@@ -52,7 +52,7 @@ const Allergies = (props) => {
           })}
         </div>
         <div className="action">
-          <Button onClick={() => incrementStep()}>Next</Button>
+          <Button onClick={() => incrementStep()} type="primary">Next</Button>
         </div>
       </div>
     </div>

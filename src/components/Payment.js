@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import {
   CardElement,
@@ -7,6 +7,8 @@ import {
   useElements,
 } from "@stripe/react-stripe-js";
 import { Button, Col, Row, Input, Typography } from "antd";
+import axios from "axios";
+import config from "../config";
 
 const { Title } = Typography;
 
@@ -33,8 +35,15 @@ const createOptions = () => {
 const Form = (props) => {
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState("");
+  const [price, setPrice] = useState(0);
   const stripe = useStripe();
   const elements = useElements();
+  useEffect(() => {
+    (async() => {
+      const { data } = await axios.get(`${config.baseUrl}settings/price`);
+      setPrice(data.price);
+    })();
+  },[]);
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
@@ -50,6 +59,7 @@ const Form = (props) => {
     }
     props.incrementStep({ payment: token });
   };
+
   const changeForm = (value) => {
     setName(value);
   };
@@ -74,7 +84,7 @@ const Form = (props) => {
           onClick={(event) => handleSubmit(event)}
           loading={loading}
         >
-          Pay
+          Pay ${price}
         </Button>
       </div>
     </div>

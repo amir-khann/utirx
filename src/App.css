@@ -16,6 +16,33 @@
 .ant-layout-header {
   color: #fff !important;
 }
+
+.ant-btn {
+  line-height: 1.5715;
+  position: relative;
+  display: inline-block;
+  font-weight: 400;
+  white-space: nowrap;
+  text-align: center;
+  background-image: none;
+  border: 1px solid transparent;
+  box-shadow: 0 2px 0 rgb(0 0 0 / 2%);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  touch-action: manipulation;
+  height: 60px!important;
+  padding: 4px 15px;
+  font-size: 24px!important;
+  border-radius: 2px;
+  color: rgba(0, 0, 0, 0.85);
+  background: #fff;
+  border-color: #d9d9d9;
+}
+
 .ant-layout-content {
   /* display: flex;
   align-items: center;
@@ -216,11 +243,33 @@ small {
   border: 1px solid gray;
   border-radius: 20px;
   justify-content: space-between;
-  padding: 5px 10px;
+  padding: 2px 2px 2px 4px;
   background: #6b63ff;
   color: #fff;
   white-space: nowrap;
   width: auto;
+}
+
+.ant-input {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-variant: tabular-nums;
+  list-style: none;
+  font-feature-settings: 'tnum', "tnum";
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  min-width: 0;
+  padding: 4px 11px;
+  color: rgba(0, 0, 0, 0.85);
+  font-size: 24px!important;
+  line-height: 1.5715;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #d9d9d9;
+  border-radius: 2px;
+  transition: all 0.3s;
 }
 
 .chip .allergy {

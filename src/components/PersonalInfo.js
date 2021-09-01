@@ -190,6 +190,7 @@ const PersonalInfo = (props) => {
               loading={loading}
               onClick={(e) => submitStepOne(e)}
               disabled={dateError}
+              type="primary"
             >
               Continue
             </Button>
@@ -290,14 +291,13 @@ const PersonalInfo = (props) => {
                         onSuccess("ok");
                       }, 0);
                     }}
+                    accept="image/*"
                   >
                     <Button icon={<UploadOutlined />}>Click to Select</Button>
                   </Upload>
-                  {errorStepTwo.identityPictures && (
-                    <small className="error-message">
-                      {errorStepTwo.identityPictures}
-                    </small>
-                  )}
+                  <small className="error-message">
+                    {errorStepTwo.identityPictures}
+                  </small>
                 </div>
                 {/* <input
                   type="file"
@@ -310,6 +310,8 @@ const PersonalInfo = (props) => {
                 disabled={loading}
                 loading={loading}
                 onClick={(e) => submitStepTwo(e)}
+                type="primary"
+                style={{ marginTop: "10px" }}
               >
                 Next
               </Button>
@@ -360,7 +362,11 @@ const PersonalInfo = (props) => {
                   />
                 </div>
               </form>
-              <Button type="primary" onClick={() => selectPharmacy()}>
+              <Button
+                type="primary"
+                onClick={() => selectPharmacy()}
+                style={{ marginTop: "10px" }}
+              >
                 Next
               </Button>
             </div>
