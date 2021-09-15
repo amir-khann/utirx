@@ -9,7 +9,7 @@
 }
 
 .active {
-  color: seagreen;
+  color: #6B63FF;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
@@ -38,6 +38,18 @@
   padding: 4px 15px;
   font-size: 24px!important;
   border-radius: 2px;
+}
+
+.link-button {
+  margin-top: 50px;
+  border: 0px!important;
+  text-align: left!important;
+  height: 32px!important;
+  font-size: 24px!important;
+  box-shadow: none!important;
+  color: #6B63FF!important;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .ant-layout-content {
@@ -348,6 +360,10 @@ form {
   color: rgb(73, 77, 85);
   font-weight: 300;
   margin-bottom: 20px !important;
+}
+
+.m-t-10-px {
+  margin-top: 10px;
 }
 
 .consent {

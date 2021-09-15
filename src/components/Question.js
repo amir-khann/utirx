@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Image, Button } from "antd";
+import { Image } from "antd";
 import { CSSTransition } from "react-transition-group";
 import Answers from "./Answers";
 
@@ -53,12 +53,12 @@ const Question = (props) => {
                 display: "flex"
               }}
             >
-              {props.index !== 0 && <Button
+              {props.index !== 0 && <p
                 onClick={() => props.decrementIndex()}
-                type="primary"
+                className="link-button"
               >
                 Previous
-              </Button>}
+              </p>}
             </div>
           </div>
         </CSSTransition>

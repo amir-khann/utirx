@@ -150,15 +150,15 @@ const PersonalInfo = (props) => {
   return (
     <div className="responsive">
       <div className="tabs">
-        <div className={step === 0 ? "tab active" : "tab"}>Step 1</div>
-        <div className={step === 1 ? "tab active" : "tab"}>Step 2</div>
-        <div className={step === 2 ? "tab active" : "tab"}>Step 3</div>
+        <div className={step === 0 ? "tab active title" : "tab title"}>Step 1</div>
+        <div className={step === 1 ? "tab active title" : "tab title"}>Step 2</div>
+        <div className={step === 2 ? "tab active title" : "tab title"}>Step 3</div>
       </div>
       <Col span={24}>
         {step === 0 && (
           <form>
             <Row>
-              <label className={"label"}>Name</label>
+              <label className={"helper-message"}>Name</label>
               <Input
                 placeholder={"Full Name"}
                 type="text"
@@ -170,7 +170,7 @@ const PersonalInfo = (props) => {
               )}
             </Row>
             <Row>
-              <label className={"label"}>Date of Birth</label>
+              <label className={"helper-message"}>Date of Birth</label>
               <Input
                 type="date"
                 onChange={(e) => changeForm(e.target.name, e.target.value)}
@@ -200,7 +200,7 @@ const PersonalInfo = (props) => {
           <div>
             <form>
               <div>
-                <label className={"label"}>Email</label>
+                <label className={"helper-message"}>Email</label>
                 <Input
                   type="email"
                   name="email"
@@ -211,7 +211,7 @@ const PersonalInfo = (props) => {
                 )}
               </div>
               <div>
-                <label className={"label"}>Phone Number</label>
+                <label className={"helper-message"}>Phone Number</label>
                 <Input
                   type="text"
                   name="phoneNumber"
@@ -225,7 +225,7 @@ const PersonalInfo = (props) => {
               </div>
               <div className="justify-space-between">
                 <div style={{ width: "40%" }}>
-                  <label className={"label"}>Street</label>
+                  <label className={"helper-message"}>Street</label>
                   <Input
                     type="text"
                     name="street"
@@ -240,7 +240,7 @@ const PersonalInfo = (props) => {
                   )}
                 </div>
                 <div>
-                  <label className={"label"}>City</label>
+                  <label className={"helper-message"}>City</label>
                   <Input
                     type="text"
                     name="city"
@@ -253,7 +253,7 @@ const PersonalInfo = (props) => {
                   )}
                 </div>
                 <div>
-                  <label className={"label"}>State</label>
+                  <label className={"helper-message"}>State</label>
                   <Input
                     type="text"
                     name="state"
@@ -269,7 +269,7 @@ const PersonalInfo = (props) => {
                 </div>
               </div>
               <div>
-                <label className={"label"}>Zip Code</label>
+                <label className={"helper-message"}>Zip Code</label>
                 <Input
                   type="text"
                   name="zipcode"
@@ -282,7 +282,7 @@ const PersonalInfo = (props) => {
                 )}
               </div>
               <div>
-                <label className={"label"}>Photo</label>
+                <label className={"helper-message"}>Identity Pictures (Front and Back)</label>
                 <div>
                   <Upload
                     onChange={(e) => addFiles(e)}
@@ -344,7 +344,7 @@ const PersonalInfo = (props) => {
               OR
               <form style={{ marginRight: "20px" }}>
                 <div>
-                  <label className={"label"}>Pharmacy Name</label>
+                  <label className={"helper-message"}>Pharmacy Name</label>
                   <Input
                     onChange={(e) =>
                       changeStepThree(e.target.name, e.target.value)
@@ -353,7 +353,7 @@ const PersonalInfo = (props) => {
                   />
                 </div>
                 <div>
-                  <label className={"label"}>Pharmacy Address</label>
+                  <label className={"helper-message"}>Pharmacy Address</label>
                   <Input
                     onChange={(e) =>
                       changeStepThree(e.target.name, e.target.value)

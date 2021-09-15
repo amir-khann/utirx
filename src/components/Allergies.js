@@ -28,7 +28,7 @@ const Allergies = (props) => {
       </div>
       <div className="flex column vh-90 allergies">
         <h2 className="title">Allergies</h2>
-        <small>List down any allergies you may have</small>
+        <small className="helper-message m-t-10-px">List down any allergies you may have</small>
         <br />
         <Input
           onChange={handleInputChange}
