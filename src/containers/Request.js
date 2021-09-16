@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import _ from "lodash";
 import "../App.css";
 
@@ -16,14 +17,9 @@ import Loader from "../components/Loader";
 
 const Request = () => {
   const history = useHistory();
-  const [questions, setQuestions] = useState([]);
+  const { questions, index, step, apiRequest } = useSelector((state) => state);
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
-  const [index, setIndex] = useState(0);
-  const [step, setStep] = useState(0);
-  const [apiRequest, setRequest] = useState({
-    questions: [],
-    allergies: [],
-  });
 
   const incrementIndex = (question, answer) => {
     let answers = apiRequest.questions;
@@ -32,55 +28,73 @@ const Request = () => {
     } else {
       answers = [{ question, answer }];
     }
-    setRequest({ ...apiRequest, ...{ questions: _.uniqBy(answers, 'question') } });
+    dispatch({
+      type: "SET_API_REQUEST",
+      apiRequest: {
+        ...apiRequest,
+        ...{ questions: _.uniqBy(answers, "question") },
+      },
+    });
     if (index + 1 === questions.length) {
       console.log(apiRequest);
-      setStep(step + 1);
+      dispatch({ type: "SET_STEP", step: step + 1 });
     } else {
-      setIndex(index + 1);
+      dispatch({ type: "SET_INDEX", index: index + 1 });
     }
   };
 
   const decrementIndex = () => {
-    if(index !== 0) {
-      setIndex(index - 1);
+    if (index !== 0) {
+      dispatch({ type: "SET_INDEX", index: index - 1 });
     }
   };
 
   const incrementStep = async (data) => {
     if (step === 1) {
-      setRequest({
-        ...apiRequest,
-        allergies: data,
+      dispatch({
+        type: "SET_API_REQUEST",
+        apiRequest: {
+          ...apiRequest,
+          allergies: data,
+        },
       });
     }
     if (step === 3) {
-      setRequest({ ...apiRequest, ...data });
+      dispatch({
+        type: "SET_API_REQUEST",
+        apiRequest: { ...apiRequest, ...data },
+      });
     }
     if (step === 4) {
       const response = await axios.post(`${config.baseUrl}request/card`, {
         ...apiRequest,
         ...data,
       });
-      setRequest({ ...apiRequest, ...response.data });
-      await axios.post(`${config.baseUrl}request`, { ...apiRequest, ...response.data  });
+      dispatch({
+        type: "SET_API_REQUEST",
+        apiRequest: { ...apiRequest, ...response.data },
+      });
+      await axios.post(`${config.baseUrl}request`, {
+        ...apiRequest,
+        ...response.data,
+      });
     }
     console.log({ ...apiRequest, ...data });
-    setStep(step + 1);
+    dispatch({ type: "SET_STEP", step: step + 1 });
   };
 
   const decrementStep = () => {
     if (step > 0) {
-      setStep(step - 1);
+      dispatch({ type: "SET_STEP", step: step - 1 });
     }
-  }
+  };
 
   useEffect(() => {
     axios.get(`${config.baseUrl}questions`).then((res) => {
-      setQuestions(res.data);
+      dispatch({ type: "SET_QUESTIONS", questions: res.data });
       setLoading(false);
     });
-  }, []);
+  }, [dispatch]);
   return (
     <Container>
       {loading ? (
@@ -94,13 +108,23 @@ const Request = () => {
           index={index}
         />
       ) : step === 1 ? (
-        <Allergies incrementStep={incrementStep} decrementStep={decrementStep}/>
+        <Allergies
+          incrementStep={incrementStep}
+          decrementStep={decrementStep}
+        />
       ) : step === 2 ? (
-        <Consent history={history} incrementStep={incrementStep} decrementStep={decrementStep}/>
+        <Consent
+          history={history}
+          incrementStep={incrementStep}
+          decrementStep={decrementStep}
+        />
       ) : step === 3 ? (
-        <PersonalInfo incrementStep={incrementStep} decrementStep={decrementStep}/>
+        <PersonalInfo
+          incrementStep={incrementStep}
+          decrementStep={decrementStep}
+        />
       ) : step === 4 ? (
-        <Payment incrementStep={incrementStep} decrementStep={decrementStep}/>
+        <Payment incrementStep={incrementStep} decrementStep={decrementStep} />
       ) : (
         <Success history={history} />
       )}

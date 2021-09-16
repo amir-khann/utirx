@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { loadStripe } from "@stripe/stripe-js";
 import {
   CardElement,
@@ -38,6 +39,7 @@ const Form = (props) => {
   const [price, setPrice] = useState(0);
   const stripe = useStripe();
   const elements = useElements();
+  const { dispatch } = props;
   useEffect(() => {
     (async () => {
       const { data } = await axios.get(`${config.baseUrl}settings/price`);
@@ -57,6 +59,7 @@ const Form = (props) => {
       setLoading(false);
       return error;
     }
+    dispatch({ type: 'RESET' });
     props.incrementStep({ payment: token });
   };
 
@@ -92,6 +95,7 @@ const Form = (props) => {
 };
 
 const Payment = (props) => {
+  const dispatch = useDispatch();
   const stripePromise = loadStripe(process.env.REACT_APP_STRIPE);
   return (
     <div className="column">
@@ -101,7 +105,7 @@ const Payment = (props) => {
         </p>
       </div>
       <Elements stripe={stripePromise}>
-        <Form incrementStep={props.incrementStep} />
+        <Form incrementStep={props.incrementStep} dispatch={dispatch}/>
       </Elements>
     </div>
   );

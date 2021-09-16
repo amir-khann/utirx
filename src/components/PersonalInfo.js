@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import config from "../config";
 import MapComponent from "./MapComponent";
 import { Input, Button, Upload, List, Row, Col } from "antd";
@@ -10,12 +11,9 @@ import vaidateNameAndDOB from "../validators/StepOne";
 import validateStepTwo from "../validators/StepTwo";
 
 const PersonalInfo = (props) => {
+  const { stepOne, stepTwo, stepThree } = useSelector((state) => state);
+  const dispatch = useDispatch();
   const [step, setStep] = useState(0);
-  const [stepOne, setStepOne] = useState({});
-  const [stepTwo, setStepTwo] = useState({});
-  const [stepThree, setStepThree] = useState({
-    pharmacy: {},
-  });
   const [loading, setLoading] = useState(false);
   const [pharmacies, setPharmacies] = useState([]);
   const [pharmacy, setPharmacy] = useState({});
@@ -31,7 +29,7 @@ const PersonalInfo = (props) => {
   const changeForm = (name, value) => {
     let temp = stepOne;
     temp[name] = value;
-    setStepOne({ ...temp });
+    dispatch({ type: "SET_STEP_ONE", stepOne: { ...temp } });
     if (name === "dob") {
       try {
         const now = moment();
@@ -50,7 +48,7 @@ const PersonalInfo = (props) => {
     console.log(value);
     let temp = stepTwo;
     temp[name] = value;
-    setStepTwo({ ...temp });
+    dispatch({ type: "SET_STEP_TWO", stepTwo: { ...temp } });
   };
   const submitStepOne = async (e) => {
     try {
@@ -118,7 +116,10 @@ const PersonalInfo = (props) => {
   };
   const selectPharmacy = () => {
     if (manualPharmacy.name && manualPharmacy.address) {
-      setStepThree({ ...{ pharmacy: manualPharmacy } });
+      dispatch({
+        type: "SET_STEP_THREE",
+        stepThree: { ...{ pharmacy: manualPharmacy } },
+      });
       props.incrementStep({
         ...stepOne,
         ...stepTwo,
@@ -140,9 +141,12 @@ const PersonalInfo = (props) => {
     console.log("code running");
     reader.onload = (e) => {
       let pictures = stepTwo.identityPictures || [];
-      setStepTwo({
-        ...stepTwo,
-        ...{ identityPictures: [...pictures, { url: e.target.result }] },
+      dispatch({
+        type: "SET_STEP_TWO",
+        stepTwo: {
+          ...stepTwo,
+          ...{ identityPictures: [...pictures, { url: e.target.result }] },
+        },
       });
     };
     reader.readAsDataURL(file.originFileObj);
@@ -176,6 +180,7 @@ const PersonalInfo = (props) => {
                   type="text"
                   onChange={(e) => changeForm(e.target.name, e.target.value)}
                   name="name"
+                  value={stepOne.name}
                 />
                 {errorStepOne.name && (
                   <small className="error-message">{errorStepOne.name}</small>
@@ -187,6 +192,7 @@ const PersonalInfo = (props) => {
                   type="date"
                   onChange={(e) => changeForm(e.target.name, e.target.value)}
                   name="dob"
+                  value={stepOne.dob}
                 />
                 {errorStepOne.dob && (
                   <small className="error-message">{errorStepOne.dob}</small>
@@ -220,6 +226,7 @@ const PersonalInfo = (props) => {
                     onChange={(e) =>
                       changeStepTwo(e.target.name, e.target.value)
                     }
+                    value={stepTwo.email}
                   />
                   {errorStepTwo.email && (
                     <small className="error-message">
@@ -235,6 +242,7 @@ const PersonalInfo = (props) => {
                     onChange={(e) =>
                       changeStepTwo(e.target.name, e.target.value)
                     }
+                    value={stepTwo.phoneNumber}
                   />
                   {errorStepTwo.phoneNumber && (
                     <small className="error-message">
@@ -251,6 +259,7 @@ const PersonalInfo = (props) => {
                       onChange={(e) =>
                         changeStepTwo(e.target.name, e.target.value)
                       }
+                      value={stepTwo.street}
                     />
                     {errorStepTwo.street && (
                       <small className="error-message">
@@ -266,6 +275,7 @@ const PersonalInfo = (props) => {
                       onChange={(e) =>
                         changeStepTwo(e.target.name, e.target.value)
                       }
+                      value={stepTwo.city}
                     />
                     {errorStepTwo.city && (
                       <small className="error-message">
@@ -281,6 +291,7 @@ const PersonalInfo = (props) => {
                       onChange={(e) =>
                         changeStepTwo(e.target.name, e.target.value)
                       }
+                      value={stepTwo.state}
                     />
                     {errorStepTwo.state && (
                       <small className="error-message">
@@ -297,6 +308,7 @@ const PersonalInfo = (props) => {
                     onChange={(e) =>
                       changeStepTwo(e.target.name, e.target.value)
                     }
+                    value={stepTwo.zipcode}
                   />
                   {errorStepTwo.zipcode && (
                     <small className="error-message">
@@ -317,6 +329,7 @@ const PersonalInfo = (props) => {
                         }, 0);
                       }}
                       accept="image/*"
+                      fileList={stepTwo.identityPictures}
                     >
                       <Button icon={<UploadOutlined />}>Click to Select</Button>
                     </Upload>

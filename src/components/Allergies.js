@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Input, Button, Image } from "antd";
 
 const Allergies = (props) => {
+  const { allergies } = useSelector((state) => state);
+  const dispatch = useDispatch();
   const [allergy, setAllergy] = useState("");
-  const [allergies, setAllergies] = useState([]);
   const handleInputChange = (e) => {
     setAllergy(e.target.value);
   };
@@ -11,7 +13,7 @@ const Allergies = (props) => {
     if (e.keyCode === 13) {
       let mAllergies = allergies;
       mAllergies.push(allergy);
-      setAllergies([...mAllergies]);
+      dispatch({ type: "SET_ALLERGIES", allergies: [...mAllergies] });
       setAllergy("");
     }
   };
@@ -19,41 +21,52 @@ const Allergies = (props) => {
     props.incrementStep(allergies);
   };
   const deleteAllergy = (item) => {
-    setAllergies(allergies.filter((i) => i !== item));
+    dispatch({
+      type: "SET_ALLERGIES",
+      allergies: allergies.filter((i) => i !== item),
+    });
   };
   return (
-    <div className="flex responsive">
-      <div className="interview">
-        <Image src="allergies.svg" preview={false} width={"90%"} />
+    <div className="flex column">
+      <div className="back-container">
+        <p className="link-button" onClick={() => props.decrementStep()}>Go Back</p>
       </div>
-      <div className="flex column vh-90 allergies">
-        <h2 className="title">Allergies</h2>
-        <small className="helper-message m-t-10-px">List down any allergies you may have</small>
-        <br />
-        <Input
-          onChange={handleInputChange}
-          onKeyDown={keyDown}
-          value={allergy}
-          style={{width: '100%'}}
-        />
-        <div className="chips">
-          {allergies.map((item, index) => {
-            return (
-              <div className="chip" key={index.toString()}>
-                <span className="allergy">{item}</span>
-                <span
-                  className="close-button"
-                  onClick={() => deleteAllergy(item)}
-                >
-                  &times;
-                </span>
-              </div>
-            );
-          })}
+      <div className="flex responsive">
+        <div className="interview">
+          <Image src="allergies.svg" preview={false} width={"90%"} />
         </div>
-        <div className="action">
-          <Button onClick={() => props.decrementStep()} type="primary">Go Back</Button>
-          <Button onClick={() => incrementStep()} type="primary">Next</Button>
+        <div className="flex column vh-90 allergies">
+          <h2 className="title">Allergies</h2>
+          <small className="helper-message m-t-10-px">
+            List down any allergies you may have
+          </small>
+          <br />
+          <Input
+            onChange={handleInputChange}
+            onKeyDown={keyDown}
+            value={allergy}
+            style={{ width: "100%" }}
+          />
+          <div className="chips">
+            {allergies.map((item, index) => {
+              return (
+                <div className="chip" key={index.toString()}>
+                  <span className="allergy">{item}</span>
+                  <span
+                    className="close-button"
+                    onClick={() => deleteAllergy(item)}
+                  >
+                    &times;
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+          <div className="action">
+            <Button onClick={() => incrementStep()} type="primary">
+              Next
+            </Button>
+          </div>
         </div>
       </div>
     </div>

@@ -42,7 +42,6 @@
 }
 
 .link-button {
-  margin-top: 50px;
   border: 0px!important;
   text-align: left!important;
   height: 32px!important;
@@ -53,12 +52,17 @@
   cursor: pointer;
 }
 
+.m-t-50-px {
+  margin-top: 50px;
+}
+
 .ant-layout-content {
   /* display: flex;
   align-items: center;
   justify-content: center; */
   line-height: 50px;
   background: #fff;
+  max-height: 90vh;
 }
 
 .ant-layout-footer {
