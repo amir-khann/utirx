@@ -12,6 +12,7 @@ import PersonalInfo from "../components/PersonalInfo";
 import Payment from "../components/Payment";
 import Success from "../components/Success";
 import Container from "../components/Container";
+import Loader from "../components/Loader";
 
 const Request = () => {
   const history = useHistory();
@@ -77,7 +78,7 @@ const Request = () => {
   return (
     <Container>
       {loading ? (
-        <p>Loading...</p>
+        <Loader />
       ) : step === 0 ? (
         <Question
           question={questions[index]}
