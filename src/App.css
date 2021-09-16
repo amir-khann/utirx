@@ -364,6 +364,14 @@ form {
   font-size: 36px;
 }
 
+.sub-title {
+  font-size: 20px;
+}
+
+.search {
+  line-height: 15px;
+}
+
 .helper-message {
   font-size: 16px !important;
   line-height: 16px;

@@ -90,11 +90,18 @@ const Request = () => {
   };
 
   useEffect(() => {
-    axios.get(`${config.baseUrl}questions`).then((res) => {
-      dispatch({ type: "SET_QUESTIONS", questions: res.data });
+    if (step === 5) {
+      dispatch({ type: "SET_STEP", step: 0 });
+    }
+    if (questions.length === 0) {
+      axios.get(`${config.baseUrl}questions`).then((res) => {
+        dispatch({ type: "SET_QUESTIONS", questions: res.data });
+        setLoading(false);
+      });
+    } else {
       setLoading(false);
-    });
-  }, [dispatch]);
+    }
+  }, [dispatch, questions]);
   return (
     <Container>
       {loading ? (

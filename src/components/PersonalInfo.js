@@ -10,12 +10,14 @@ import moment from "moment";
 import vaidateNameAndDOB from "../validators/StepOne";
 import validateStepTwo from "../validators/StepTwo";
 
+
 const PersonalInfo = (props) => {
   const { stepOne, stepTwo, stepThree } = useSelector((state) => state);
   const dispatch = useDispatch();
   const [step, setStep] = useState(0);
   const [loading, setLoading] = useState(false);
   const [pharmacies, setPharmacies] = useState([]);
+  const [pharmacyToDisplay, setPharmacyToDisplay] = useState([]);
   const [pharmacy, setPharmacy] = useState({});
   const [error, setError] = useState("");
   const [manualPharmacy, setManualPharmacy] = useState({
@@ -101,6 +103,7 @@ const PersonalInfo = (props) => {
         `${config.baseUrl}places/${stepTwo.street}, ${stepTwo.city}, ${stepTwo.state}`
       );
       setPharmacies(data);
+      setPharmacyToDisplay(data);
       setPharmacy(data[0]);
       setStep(step + 1);
     } catch (err) {
@@ -145,11 +148,16 @@ const PersonalInfo = (props) => {
         type: "SET_STEP_TWO",
         stepTwo: {
           ...stepTwo,
-          ...{ identityPictures: [...pictures, { url: e.target.result }] },
+          ...{ identityPictures: [...pictures, { url: e.target.result, name: 'File' }] },
         },
       });
     };
     reader.readAsDataURL(file.originFileObj);
+  };
+  const search = (e) => {
+    const { value } = e.target;
+    const temp = pharmacies.filter((pharma) => pharma.name.includes(value));
+    setPharmacyToDisplay(temp);
   };
   return (
     <div className="column">
@@ -160,13 +168,13 @@ const PersonalInfo = (props) => {
       </div>
       <div className="responsive">
         <div className="tabs">
-          <div className={step === 0 ? "tab active title" : "tab title"}>
+          <div className={step === 0 ? "tab active sub-title" : "tab sub-title"}>
             Step 1
           </div>
-          <div className={step === 1 ? "tab active title" : "tab title"}>
+          <div className={step === 1 ? "tab active sub-title" : "tab sub-title"}>
             Step 2
           </div>
-          <div className={step === 2 ? "tab active title" : "tab title"}>
+          <div className={step === 2 ? "tab active sub-title" : "tab sub-title"}>
             Step 3
           </div>
         </div>
@@ -366,8 +374,12 @@ const PersonalInfo = (props) => {
                     overflow: "scroll",
                   }}
                 >
+                  <div className="search">
+                    <label className="helper-message">Search</label>
+                    <Input name="search" onChange={(e) => search(e)}/>
+                  </div>
                   <List
-                    dataSource={pharmacies}
+                    dataSource={pharmacyToDisplay}
                     renderItem={(item) => (
                       <List.Item onClick={() => setPharmacy(item)}>
                         <List.Item.Meta
@@ -411,6 +423,7 @@ const PersonalInfo = (props) => {
               <MapComponent
                 lat={pharmacy.geometry.location.lat}
                 lng={pharmacy.geometry.location.lng}
+                style={{ maxWidth: "60%" }}
               />
             </div>
           )}

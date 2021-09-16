@@ -86,7 +86,9 @@ const rootReducer = (state = initialState, action) => {
         stepThree: action.stepThree,
       }
     case 'RESET':
-      return initialState;
+      return {
+        ...initialState,
+      };
     default:
       return state
   }
