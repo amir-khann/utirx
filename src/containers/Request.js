@@ -69,6 +69,12 @@ const Request = () => {
     setStep(step + 1);
   };
 
+  const decrementStep = () => {
+    if (step > 0) {
+      setStep(step - 1);
+    }
+  }
+
   useEffect(() => {
     axios.get(`${config.baseUrl}questions`).then((res) => {
       setQuestions(res.data);
@@ -88,13 +94,13 @@ const Request = () => {
           index={index}
         />
       ) : step === 1 ? (
-        <Allergies incrementStep={incrementStep} />
+        <Allergies incrementStep={incrementStep} decrementStep={decrementStep}/>
       ) : step === 2 ? (
-        <Consent history={history} incrementStep={incrementStep} />
+        <Consent history={history} incrementStep={incrementStep} decrementStep={decrementStep}/>
       ) : step === 3 ? (
-        <PersonalInfo incrementStep={incrementStep} />
+        <PersonalInfo incrementStep={incrementStep} decrementStep={decrementStep}/>
       ) : step === 4 ? (
-        <Payment incrementStep={incrementStep} />
+        <Payment incrementStep={incrementStep} decrementStep={decrementStep}/>
       ) : (
         <Success history={history} />
       )}

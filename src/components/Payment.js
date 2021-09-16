@@ -23,7 +23,7 @@ const createOptions = () => {
         lineHeight: "60px",
         "::placeholder": {
           color: "#aab7c4",
-        }
+        },
       },
       invalid: {
         color: "#c23d4b",
@@ -39,11 +39,11 @@ const Form = (props) => {
   const stripe = useStripe();
   const elements = useElements();
   useEffect(() => {
-    (async() => {
+    (async () => {
       const { data } = await axios.get(`${config.baseUrl}settings/price`);
       setPrice(data.price);
     })();
-  },[]);
+  }, []);
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
@@ -94,9 +94,16 @@ const Form = (props) => {
 const Payment = (props) => {
   const stripePromise = loadStripe(process.env.REACT_APP_STRIPE);
   return (
-    <Elements stripe={stripePromise}>
-      <Form incrementStep={props.incrementStep} />
-    </Elements>
+    <div className="column">
+      <div className="back-container">
+        <p className="link-button" onClick={() => props.decrementStep()}>
+          Go Back
+        </p>
+      </div>
+      <Elements stripe={stripePromise}>
+        <Form incrementStep={props.incrementStep} />
+      </Elements>
+    </div>
   );
 };
 
