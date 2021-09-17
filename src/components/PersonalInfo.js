@@ -10,7 +10,6 @@ import moment from "moment";
 import vaidateNameAndDOB from "../validators/StepOne";
 import validateStepTwo from "../validators/StepTwo";
 
-
 const PersonalInfo = (props) => {
   const { stepOne, stepTwo, stepThree } = useSelector((state) => state);
   const dispatch = useDispatch();
@@ -29,6 +28,7 @@ const PersonalInfo = (props) => {
   const [errorStepTwo, setErrorStepTwo] = useState({});
 
   const changeForm = (name, value) => {
+    setError(false);
     let temp = stepOne;
     temp[name] = value;
     dispatch({ type: "SET_STEP_ONE", stepOne: { ...temp } });
@@ -56,7 +56,6 @@ const PersonalInfo = (props) => {
     try {
       e.preventDefault();
       const errorsStepOne = vaidateNameAndDOB(stepOne);
-      console.log(errorsStepOne);
       if (errorsStepOne.name || errorsStepOne.dob) {
         setErrorStepOne(errorsStepOne);
         return;
@@ -65,13 +64,15 @@ const PersonalInfo = (props) => {
       if (!error) {
         const { data } = await axios.post(
           `${config.baseUrl}request/get-request-by-name`,
-          stepOne
+          {
+            identityNumber: stepOne.identityNumber
+          }
         );
-        if (!data.length) {
+        if (!data.request.length) {
           setStep(step + 1);
         } else {
           setError(
-            "This person seems to have received the prescription in the last two months. You may continue at your own risk, but the doctor may reject your prescription if your ID matches with the previously issued prescription record. Are you sure you did not receive the prescription in the last 2 months and want to continue?"
+            `You have already requested a prescription in last ${data.settings[0].prescriptionWindow} days. You cannot request a new one.`
           );
         }
       } else {
@@ -140,15 +141,18 @@ const PersonalInfo = (props) => {
 
   const addFiles = ({ file }) => {
     let reader = new FileReader();
-    console.log(file);
-    console.log("code running");
     reader.onload = (e) => {
-      let pictures = stepTwo.identityPictures || [];
+      let pictures = stepOne.identityPictures || [];
       dispatch({
-        type: "SET_STEP_TWO",
-        stepTwo: {
-          ...stepTwo,
-          ...{ identityPictures: [...pictures, { url: e.target.result, name: 'File' }] },
+        type: "SET_STEP_ONE",
+        stepOne: {
+          ...stepOne,
+          ...{
+            identityPictures: [
+              ...pictures,
+              { url: e.target.result, name: "File" },
+            ],
+          },
         },
       });
     };
@@ -156,7 +160,9 @@ const PersonalInfo = (props) => {
   };
   const search = (e) => {
     const { value } = e.target;
-    const temp = pharmacies.filter((pharma) => pharma.name.includes(value));
+    const temp = pharmacies.filter((pharma) =>
+      pharma.name.toLowerCase().includes(value.toLowerCase())
+    );
     setPharmacyToDisplay(temp);
   };
   return (
@@ -168,21 +174,29 @@ const PersonalInfo = (props) => {
       </div>
       <div className="responsive">
         <div className="tabs">
-          <div className={step === 0 ? "tab active sub-title" : "tab sub-title"}>
-            Step 1
+          <div
+            className={step === 0 ? "tab active sub-title" : "tab sub-title"}
+          >
+            Personal Info
           </div>
-          <div className={step === 1 ? "tab active sub-title" : "tab sub-title"}>
-            Step 2
+          <div
+            className={step === 1 ? "tab active sub-title" : "tab sub-title"}
+          >
+            Additional Info
           </div>
-          <div className={step === 2 ? "tab active sub-title" : "tab sub-title"}>
-            Step 3
+          <div
+            className={step === 2 ? "tab active sub-title" : "tab sub-title"}
+          >
+            Pharmacy
           </div>
         </div>
         <Col span={24}>
           {step === 0 && (
             <form>
-              <Row>
-                <label className={"helper-message"}>Name</label>
+              <Row className="">
+                <label className={"helper-message m-b-10-px m-t-10-px"}>
+                  Name
+                </label>
                 <Input
                   placeholder={"Full Name"}
                   type="text"
@@ -194,8 +208,10 @@ const PersonalInfo = (props) => {
                   <small className="error-message">{errorStepOne.name}</small>
                 )}
               </Row>
-              <Row>
-                <label className={"helper-message"}>Date of Birth</label>
+              <Row className="">
+                <label className={"helper-message m-b-10-px m-t-10-px"}>
+                  Date of Birth
+                </label>
                 <Input
                   type="date"
                   onChange={(e) => changeForm(e.target.name, e.target.value)}
@@ -212,11 +228,59 @@ const PersonalInfo = (props) => {
                   </small>
                 )}
               </Row>
+              <div className="m-b-10-px m-t-10-px">
+                <label className={"helper-message m-b-10-px m-t-10-px"}>
+                  Identification Document (front and back of License or Photo
+                  ID)
+                </label>
+                <div>
+                  <Upload
+                    onChange={(e) => addFiles(e)}
+                    customRequest={({ file, onSuccess }) => {
+                      setTimeout(() => {
+                        onSuccess("ok");
+                      }, 0);
+                    }}
+                    accept="image/*"
+                    fileList={stepTwo.identityPictures}
+                  >
+                    <Button icon={<UploadOutlined />}>Click to Select</Button>
+                  </Upload>
+                  <small className="error-message">
+                    {errorStepOne.identityPictures}
+                  </small>
+                </div>
+                {/* <input
+                  type="file"
+                  onChange={(e) =>
+                    changeStepTwo("identityPhoto", e.target.files[0])
+                  }
+                /> */}
+              </div>
+              <div className="flex column m-b-10-px m-t-10-px">
+                <label className="helper-message m-b-0-px m-t-10-px">
+                  License or Photo ID # (required)
+                </label>
+                <small className="description-message">
+                  Upload your drivers license or legal photo ID issued by your
+                  state, that includes your name, date of birth etc
+                </small>
+                <Input
+                  name="identityNumber"
+                  value={stepOne.identityNumber}
+                  onChange={(e) => changeForm(e.target.name, e.target.value)}
+                />
+                {errorStepOne.identityNumber && (
+                  <small className="error-message">
+                    Please Enter Licence or Photo ID #
+                  </small>
+                )}
+              </div>
               <p className="error-message">{error}</p>
               <Button
                 loading={loading}
                 onClick={(e) => submitStepOne(e)}
-                disabled={dateError}
+                disabled={dateError || error}
                 type="primary"
               >
                 Continue
@@ -324,34 +388,6 @@ const PersonalInfo = (props) => {
                     </small>
                   )}
                 </div>
-                <div>
-                  <label className={"helper-message"}>
-                    Identity Pictures (Front and Back)
-                  </label>
-                  <div>
-                    <Upload
-                      onChange={(e) => addFiles(e)}
-                      customRequest={({ file, onSuccess }) => {
-                        setTimeout(() => {
-                          onSuccess("ok");
-                        }, 0);
-                      }}
-                      accept="image/*"
-                      fileList={stepTwo.identityPictures}
-                    >
-                      <Button icon={<UploadOutlined />}>Click to Select</Button>
-                    </Upload>
-                    <small className="error-message">
-                      {errorStepTwo.identityPictures}
-                    </small>
-                  </div>
-                  {/* <input
-                  type="file"
-                  onChange={(e) =>
-                    changeStepTwo("identityPhoto", e.target.files[0])
-                  }
-                /> */}
-                </div>
                 <Button
                   disabled={loading}
                   loading={loading}
@@ -376,7 +412,7 @@ const PersonalInfo = (props) => {
                 >
                   <div className="search">
                     <label className="helper-message">Search</label>
-                    <Input name="search" onChange={(e) => search(e)}/>
+                    <Input name="search" onChange={(e) => search(e)} />
                   </div>
                   <List
                     dataSource={pharmacyToDisplay}

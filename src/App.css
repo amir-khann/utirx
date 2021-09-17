@@ -109,10 +109,7 @@ small {
 }
 
 .card {
-  padding-top: 20px;
   margin-top: 20px;
-  height: 50px;
-  width: 50vw;
   /* paddingTop: theme.spacing(1) + 4,
     marginTop: theme.spacing(1),
     border: "solid",
@@ -355,7 +352,7 @@ form {
   color: #fff;
 }
 .responsive {
-  max-width: 70%;
+  max-width: 75%;
   margin-left: auto;
   margin-right: auto;
 }
@@ -381,7 +378,20 @@ form {
 }
 
 .m-t-10-px {
-  margin-top: 10px;
+  margin-top: 10px!important;
+}
+
+.m-b-10-px {
+  margin-bottom: 10px!important;
+}
+
+.m-b-0-px {
+  margin-bottom: 0px!important;
+}
+
+.description-message {
+  display: block;
+  color:rgb(73, 77, 85) !important;
 }
 
 .consent {

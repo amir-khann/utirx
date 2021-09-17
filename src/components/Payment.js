@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { loadStripe } from "@stripe/stripe-js";
 import {
   CardElement,
@@ -6,7 +7,7 @@ import {
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
-import { Button, Col, Row, Input, Typography } from "antd";
+import { Button, Input, Typography } from "antd";
 import axios from "axios";
 import config from "../config";
 
@@ -34,10 +35,10 @@ const createOptions = () => {
 
 const Form = (props) => {
   const [loading, setLoading] = useState(false);
-  const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
   const stripe = useStripe();
   const elements = useElements();
+  const { stepOne, apiRequest } = useSelector(state => state)
   useEffect(() => {
     (async () => {
       const { data } = await axios.get(`${config.baseUrl}settings/price`);
@@ -50,7 +51,7 @@ const Form = (props) => {
     const { error, token } = await stripe.createToken(
       elements.getElement(CardElement),
       {
-        name,
+        name: stepOne.name,
       }
     );
     if (error) {
@@ -60,14 +61,27 @@ const Form = (props) => {
     props.incrementStep({ payment: token });
   };
 
-  const changeForm = (value) => {
-    setName(value);
-  };
   return (
     <div className="flex vh-90 card-details">
-      <div className={"card responsive m-t-10-p"}>
+      <div className={"card responsive m-t-10-px"}>
         <Title level={2}>Card Details</Title>
-        <Col span={24}>
+        <div className="m-b-10-px">
+          <label className="m-b-10-px">Name</label>
+          <Input value={stepOne.name} readOnly />
+        </div>
+        <div className="m-b-10-px">
+          <label className="m-b-10-px">DOB</label>
+          <Input value={stepOne.dob} readOnly />
+        </div>
+        <div className="m-b-10-px">
+          <label className="m-b-10-px">Pharmacy</label>
+          <Input value={apiRequest.pharmacy.name} readOnly />
+        </div>
+        <div className="m-b-10-px">
+          <label className="m-b-10-px">Prescription Free</label>
+          <Input value={`$ ${price}`} readOnly />
+        </div>
+        {/* <Col span={24}>
           <Row>
             <label className={"label"}>Name</label>
             <Input
@@ -76,11 +90,12 @@ const Form = (props) => {
               onChange={(e) => changeForm(e.target.value)}
             />
           </Row>
-        </Col>
+        </Col> */}
         <CardElement options={{ ...createOptions(), hidePostalCode: true }} />
+        <small className="description-message">{`* You will be charged $${price} and your credit card statement will show "OnlineUTIMeds.com LLC" as a merchant name`}</small>
         <Button
           type="primary"
-          disabled={!stripe || loading || !name}
+          disabled={!stripe || loading }
           onClick={(event) => handleSubmit(event)}
           loading={loading}
         >

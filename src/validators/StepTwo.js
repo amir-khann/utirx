@@ -3,7 +3,7 @@ const phoneUtil = PhoneNumberUtil.getInstance();
 //validate Email with regex, phonenumber with regex for usa, street address, zipcode, city, state and identity pictures as base64
 const validateStepTwo = (values) => {
   const errors = {};
-  const { email, phoneNumber, street, zipcode, city, state, identityPictures } =
+  const { email, phoneNumber, street, zipcode, city, state } =
     values;
 
   if (!email) {
@@ -41,10 +41,6 @@ const validateStepTwo = (values) => {
 
   if (!state) {
     errors.state = "Required";
-  }
-
-  if (identityPictures?.length === 0 || !identityPictures) {
-    errors.identityPictures = "Required";
   }
   console.log(errors);
 
