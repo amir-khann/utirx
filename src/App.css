@@ -5,12 +5,12 @@
 }
 .tabs .tab {
   cursor: pointer;
-  /* border: seagreen dashed 1px; */
 }
 
 .active {
   color: #6B63FF;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: bold;
 }
 
 .ant-layout-header {
@@ -96,6 +96,7 @@
 .question p {
   font-size: 36px;
   margin-bottom: 0.2em;
+  line-height: 1.5;
 }
 .ant-button {
   background-color: #001529;
@@ -171,12 +172,12 @@ b {
 
 .checked-list li:before {
   content: "✓";
-  width: 15px;
-  height: 10px;
+  width: 20px;
+  height: 20px;
   margin-right: 5px;
   color: #fff;
-  background-color: #000;
-  border-radius: 50%;
+  background-color: #6B63FF;
+  border-radius: 20%;
 }
 
 .left {
@@ -185,6 +186,10 @@ b {
 
 .right {
   flex-basis: 50%;
+}
+
+.wrap {
+  flex-wrap: wrap;
 }
 
 .column {
@@ -392,6 +397,7 @@ form {
 .description-message {
   display: block;
   color:rgb(73, 77, 85) !important;
+  line-height: 2;
 }
 
 .consent {
@@ -401,6 +407,10 @@ form {
 
 .m-t-10-p {
   margin-top: 10%;
+}
+
+.street {
+  width: 40%;
 }
 
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {
@@ -421,6 +431,37 @@ form {
   }
   .ant-checkbox-wrapper {
     line-height: inherit;
+  }
+  .left {
+    flex-basis: 100%;
+  }
+
+  .image {
+    display: none;
+  }
+
+  .right {
+    flex-basis: 100%;
+    margin-top: 1rem;
+  }
+
+  .column-on-mobile {
+    flex-direction: column;
+  }
+  .tabs {
+    width: 100%;
+  }
+  .tab {
+    font-size: medium;
+  }
+  .justify-space-between {
+    flex-direction: column;
+  }
+  .street {
+    width: 100%;
+  }
+  .hide-on-mobile {
+    display: none;
   }
   
 }

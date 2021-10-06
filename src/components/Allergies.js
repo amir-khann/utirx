@@ -7,10 +7,12 @@ const Allergies = (props) => {
   const dispatch = useDispatch();
   const [allergy, setAllergy] = useState("");
   const handleInputChange = (e) => {
-    setAllergy(e.target.value);
+    if(e.target.value !== ',') {
+      setAllergy(e.target.value);
+    }
   };
   const keyDown = (e) => {
-    if (e.keyCode === 13) {
+    if (e.keyCode === 13 || e.keyCode === 188) {
       let mAllergies = allergies;
       mAllergies.push(allergy);
       dispatch({ type: "SET_ALLERGIES", allergies: [...mAllergies] });

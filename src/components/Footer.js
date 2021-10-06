@@ -5,7 +5,7 @@ import { Menu } from 'antd';
 const Footer = () => {
   return (
     <div className="container">
-      <div className="flex justify-space-between">
+      <div className="flex justify-space-between column-on-mobile">
         <div className="logo">
           <h3>&copy; UTI Online - LLC 2021</h3>
         </div>

@@ -6,7 +6,7 @@ const MapComponent = (props) => {
   return <Map google={props.google} zoom={20} center={{
       lat: props.lat || 0,
       lng: props.lng || 0
-  }} style={props.style}>
+  }} style={props.style} className={props.className}>
       <Marker
         center={
             {

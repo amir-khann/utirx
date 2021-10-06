@@ -56,7 +56,8 @@ const PersonalInfo = (props) => {
     try {
       e.preventDefault();
       const errorsStepOne = vaidateNameAndDOB(stepOne);
-      if (errorsStepOne.name || errorsStepOne.dob) {
+      console.log(errorsStepOne)
+      if (errorsStepOne.name || errorsStepOne.dob || errorsStepOne.identityNumber || errorsStepOne.identityPictures) {
         setErrorStepOne(errorsStepOne);
         return;
       }
@@ -323,7 +324,7 @@ const PersonalInfo = (props) => {
                   )}
                 </div>
                 <div className="justify-space-between">
-                  <div style={{ width: "40%" }}>
+                  <div className="street">
                     <label className={"helper-message"}>Street</label>
                     <Input
                       type="text"
@@ -460,6 +461,7 @@ const PersonalInfo = (props) => {
                 lat={pharmacy.geometry.location.lat}
                 lng={pharmacy.geometry.location.lng}
                 style={{ maxWidth: "60%" }}
+                className="hide-on-mobile"
               />
             </div>
           )}

@@ -18,16 +18,16 @@ const Content = ({ navigate }) => {
           <b className="message-fl">This application is only available to Florida residents and visitors and prescription will be sent to Florida Pharmacies only.</b>
           <Button type="primary" style={{ minWidth: '200px', borderRadius: '5px', marginTop: '10px' }} onClick={() => navigate()}>Get Started</Button>
         </div>
-        <div className="right">
+        <div className="right image">
           <Image src="doctor.svg" preview={false} width={'100%'} />
         </div>
       </div>
       <div className="flex column align-center section">
         <h2>What is a UTI?</h2>
         <p>A urinary tract infection, or UTI, is an infection in any part of your urinary tract. UTIs commonly occur in women when bacteria enter the urinary tract (including the urethra and bladder). Typical symptoms include pain and burning when urinating, frequent urination, urgent urination, and cloudy-appearing urine.</p>
-        <div className="flex">
-          <div className="left" style={{width: '50%'}}>
-            <Card style={{textAlign: 'left', minHeight: '300px', marginRight: '5px'}}>
+        <div className="flex wrap column-on-mobile">
+          <div className="left">
+            <Card style={{textAlign: 'left', marginRight: '5px'}}>
               <h4>How Can GoodRx Care Help with UTIs?</h4>
               <p>Most UTIs respond quickly to treatment with an appropriate antibiotic. GoodRx Care can connect you with providers who can prescribe antibiotics. The exact treatment they prescribe depends on your diagnosis and risk factors. Generally, they prescribe an oral antibiotic like</p>
               <ul>
@@ -39,7 +39,7 @@ const Content = ({ navigate }) => {
             </Card>
           </div>
           <div className="right">
-            <Card style={{textAlign: 'left', minHeight: '300px'}}>
+            <Card style={{textAlign: 'left', height: "100%"}}>
               <h4>Is This Service Right For Me?</h4>
               <p>Whether it’s your first UTI or you’ve had several (if so, we’re so sorry!), providers may be able to help.</p>
             </Card>
