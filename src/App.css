@@ -413,7 +413,11 @@ form {
   width: 40%;
 }
 
-@media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {
+.places {
+  margin-right: 20px;
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 550px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {
   .responsive {
     height: 100%;
     max-width: 90%;
@@ -462,6 +466,9 @@ form {
   }
   .hide-on-mobile {
     display: none;
+  }
+  .places {
+    margin-right: 0;
   }
   
 }

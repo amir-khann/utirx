@@ -56,8 +56,13 @@ const PersonalInfo = (props) => {
     try {
       e.preventDefault();
       const errorsStepOne = vaidateNameAndDOB(stepOne);
-      console.log(errorsStepOne)
-      if (errorsStepOne.name || errorsStepOne.dob || errorsStepOne.identityNumber || errorsStepOne.identityPictures) {
+      console.log(errorsStepOne);
+      if (
+        errorsStepOne.name ||
+        errorsStepOne.dob ||
+        errorsStepOne.identityNumber ||
+        errorsStepOne.identityPictures
+      ) {
         setErrorStepOne(errorsStepOne);
         return;
       }
@@ -66,7 +71,7 @@ const PersonalInfo = (props) => {
         const { data } = await axios.post(
           `${config.baseUrl}request/get-request-by-name`,
           {
-            identityNumber: stepOne.identityNumber
+            identityNumber: stepOne.identityNumber,
           }
         );
         if (!data.request.length) {
@@ -404,17 +409,17 @@ const PersonalInfo = (props) => {
           {step === 2 && (
             <div style={{ display: "flex" }}>
               <div style={{}}>
+                <div className="search">
+                  <label className="helper-message">Search</label>
+                  <Input name="search" onChange={(e) => search(e)} />
+                </div>
                 <div
                   style={{
-                    marginRight: "20px",
                     height: "50vh",
                     overflow: "scroll",
                   }}
+                  className="places"
                 >
-                  <div className="search">
-                    <label className="helper-message">Search</label>
-                    <Input name="search" onChange={(e) => search(e)} />
-                  </div>
                   <List
                     dataSource={pharmacyToDisplay}
                     renderItem={(item) => (
@@ -423,7 +428,6 @@ const PersonalInfo = (props) => {
                           title={item.name}
                           description={item.formatted_address}
                         />
-                         ̰
                       </List.Item>
                     )}
                   />
