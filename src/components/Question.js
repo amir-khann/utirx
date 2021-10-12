@@ -24,10 +24,10 @@ const Question = (props) => {
       dispatch({ type: "SET_ANSWER", answer: ans });
     }
   };
-  return (
+  return ( 
     <div className="flex responsive">
       <div className="interview">
-        <Image src="interview.svg" preview={false} width={"100%"} />
+        <Image src="interview.svg" preview={false} width={"100%"}/>
       </div>
       <div className="questions">
         <CSSTransition timeout={1000}>

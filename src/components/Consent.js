@@ -3,22 +3,27 @@ import { useSelector, useDispatch } from "react-redux";
 import { Button, Image, Checkbox } from "antd";
 import { Link } from "react-router-dom";
 
+import Summary from "./Summary";
+
 const Consent = (props) => {
   const { terms, marketing, attestation } = useSelector((state) => state);
   const dispatch = useDispatch();
 
   return (
-    <div className="flex column">
-      <div className="back-container">
+    <div className="flex">
+      <div className="back-container flex column sticky">
         <p className="link-button" onClick={() => props.decrementStep()}>
           Go Back
         </p>
-      </div>
-      <div className="flex responsive">
-        <div className="interview">
-          <Image src="agreement.svg" preview={false} width={"90%"} />
+        <div className="interview-left">
+          <Image src="agreement.svg" preview={false} width={"75%"} style={{objectFit: 'contain'}}/>
         </div>
+      </div>
+      <div className="flex float-right consent-container">
         <div className="flex  column vh-90 consent">
+          <div className="summary">
+            <Summary questions={props.questions} answers={props.answers} />
+          </div>
           <div>
             <Checkbox
               onChange={(e) =>
@@ -39,9 +44,9 @@ const Consent = (props) => {
               }
               checked={terms}
             >
-              I agree to <Link to="">Terms</Link>,{" "}
-              <Link to="">Privacy Policy</Link> and{" "}
-              <Link to="">Telehealth Consent</Link>.
+              I agree to <Link to="/terms">Terms</Link>,{" "}
+              <Link to="/privacy">Privacy Policy</Link> and{" "}
+              <Link to="/consent">Telehealth Consent</Link>.
             </Checkbox>
           </div>
           <div>
@@ -51,7 +56,7 @@ const Consent = (props) => {
               }
               checked={marketing}
             >
-              I agree to the <Link to="">HIPAA Marketing Authorization.</Link>
+              I agree to the <Link to="/marketing">HIPAA Marketing Authorization.</Link>
             </Checkbox>
           </div>
           <Button

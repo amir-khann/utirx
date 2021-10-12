@@ -124,6 +124,8 @@ const Request = () => {
           history={history}
           incrementStep={incrementStep}
           decrementStep={decrementStep}
+          questions={questions}
+          answers={_.uniqBy(apiRequest.questions, "question")}
         />
       ) : step === 3 ? (
         <PersonalInfo

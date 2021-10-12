@@ -1,14 +1,20 @@
 .tabs {
   display: flex;
-  width: 50vw;
+  width: 100%;
   justify-content: space-between;
+  border: 1px solid #6B63FF;
+  border-radius: 5px;
 }
 .tabs .tab {
   cursor: pointer;
+  width: 33.33%;
+  text-align: center;
+  color: #6B63FF;
 }
 
 .active {
-  color: #6B63FF;
+  background-color: #6B63FF;
+  color: #fff!important;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-weight: bold;
 }
@@ -139,6 +145,19 @@ small {
   margin-top: 50px;
 }
 
+.sticky {
+  position: fixed;
+  top: 100px;
+}
+
+.float-right {
+  float: right;
+}
+
+.consent-container {
+  margin-left: auto;
+  margin-right: 10%;
+}
 /* display: flex; */
 .flex {
   display: flex;
@@ -233,7 +252,16 @@ b {
   align-items: center;
   justify-content: center;
   padding: 10px;
-  width: 50%;
+}
+
+.scroll-table {
+  overflow-y: scroll;
+  scrollbar-color: #000;
+}
+
+::-webkit-scrollbar-thumb {
+  width: 10px;
+  color: #000;
 }
 
 .allergies {
@@ -333,6 +361,7 @@ small {
 .error-message {
   color: #ff0000;
   line-height: 20px;
+  font-size: medium;
 }
 
 form {
@@ -357,7 +386,7 @@ form {
   color: #fff;
 }
 .responsive {
-  max-width: 75%;
+  width: 75%;
   margin-left: auto;
   margin-right: auto;
 }
@@ -401,8 +430,7 @@ form {
 }
 
 .consent {
-  width: 50%;
-  margin-top: 10%;
+  margin-top: 0;
 }
 
 .m-t-10-p {
@@ -417,7 +445,40 @@ form {
   margin-right: 20px;
 }
 
-@media only screen and (min-device-width: 320px) and (max-device-width: 550px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {
+.active-pharmacy {
+  background-color: #6B63FF;
+  color: #fff!important;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.active-pharmacy div div h4 {
+  color: #fff!important;
+  padding-left: 5px;
+}
+
+.active-pharmacy div div div {
+  color: #fff!important;
+  padding-left: 5px;
+}
+
+.list-item {
+  line-height: 1;
+}
+.upload-button {
+  margin-bottom: 2px;
+}
+.upload-button div span .ant-button{
+  min-width: 300px;
+}
+
+.details {
+  margin: 0;
+  padding: 0;
+  line-height: 2;
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 550px) and (-webkit-min-device-pixel-ratio: 2){
   .responsive {
     height: 100%;
     max-width: 90%;
@@ -456,7 +517,7 @@ form {
     width: 100%;
   }
   .tab {
-    font-size: medium;
+    font-size: x-small;
   }
   .justify-space-between {
     flex-direction: column;
@@ -470,5 +531,9 @@ form {
   .places {
     margin-right: 0;
   }
-  
+  .consent-container {
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }

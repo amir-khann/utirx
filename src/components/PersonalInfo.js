@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import config from "../config";
 import MapComponent from "./MapComponent";
-import { Input, Button, Upload, List, Row, Col } from "antd";
+import { Input, Button, Upload, List, Row, Col, DatePicker } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import moment from "moment";
 
@@ -26,16 +26,14 @@ const PersonalInfo = (props) => {
   const [dateError, setDateError] = useState(false);
   const [errorStepOne, setErrorStepOne] = useState({});
   const [errorStepTwo, setErrorStepTwo] = useState({});
+  const [activeIndex, setActiveIndex] = useState(0);
 
   const changeForm = (name, value) => {
     setError(false);
-    let temp = stepOne;
-    temp[name] = value;
-    dispatch({ type: "SET_STEP_ONE", stepOne: { ...temp } });
     if (name === "dob") {
       try {
         const now = moment();
-        const dob = moment(value);
+        const dob = value;
         const age = now.diff(dob, "years");
         console.log("age ", age);
         if (age >= 18 && age <= 65) {
@@ -43,7 +41,17 @@ const PersonalInfo = (props) => {
         } else {
           setDateError(true);
         }
-      } catch (error) {}
+        let temp = stepOne;
+        temp[name] = value || now;
+        dispatch({ type: "SET_STEP_ONE", stepOne: { ...temp } });
+        console.log(temp);
+      } catch (error) {
+        throw error;
+      }
+    } else {
+      let temp = stepOne;
+      temp[name] = value;
+      dispatch({ type: "SET_STEP_ONE", stepOne: { ...temp } });
     }
   };
   const changeStepTwo = (name, value) => {
@@ -75,16 +83,17 @@ const PersonalInfo = (props) => {
           }
         );
         if (!data.request.length) {
+          setLoading(false);
           setStep(step + 1);
         } else {
           setError(
             `You have already requested a prescription in last ${data.settings[0].prescriptionWindow} days. You cannot request a new one.`
           );
+          setLoading(false);
         }
       } else {
         setStep(step + 1);
       }
-      setLoading(false);
     } catch (err) {
       setLoading(false);
     }
@@ -107,11 +116,12 @@ const PersonalInfo = (props) => {
       }
       setLoading(true);
       const { data } = await axios.get(
-        `${config.baseUrl}places/${stepTwo.street}, ${stepTwo.city}, ${stepTwo.state}`
+        `${config.baseUrl}places/${stepTwo.zipcode}`
       );
       setPharmacies(data);
       setPharmacyToDisplay(data);
       setPharmacy(data[0]);
+      setLoading(false);
       setStep(step + 1);
     } catch (err) {
       console.log(err);
@@ -145,24 +155,68 @@ const PersonalInfo = (props) => {
     }
   };
 
-  const addFiles = ({ file }) => {
-    let reader = new FileReader();
-    reader.onload = (e) => {
-      let pictures = stepOne.identityPictures || [];
-      dispatch({
-        type: "SET_STEP_ONE",
-        stepOne: {
-          ...stepOne,
-          ...{
-            identityPictures: [
-              ...pictures,
-              { url: e.target.result, name: "File" },
-            ],
+  const addFront = ({ file }) => {
+    if (file.status !== "removed") {
+      let reader = new FileReader();
+      reader.onload = (e) => {
+        let pictures = stepOne.identityPictures || {};
+        pictures.front = {
+          uid: file.uid,
+          url: e.target.result,
+          name: file.name,
+        };
+        dispatch({
+          type: "SET_STEP_ONE",
+          stepOne: {
+            ...stepOne,
+            ...{
+              identityPictures: pictures,
+            },
           },
+        });
+      };
+      reader.readAsDataURL(file.originFileObj);
+    }
+  };
+  const addBack = ({ file }) => {
+    if (file.status !== "removed") {
+      let reader = new FileReader();
+      reader.onload = (e) => {
+        let pictures = stepOne.identityPictures || {};
+        pictures.back = {
+          uid: file.uid,
+          url: e.target.result,
+          name: file.name,
+        };
+        dispatch({
+          type: "SET_STEP_ONE",
+          stepOne: {
+            ...stepOne,
+            ...{
+              identityPictures: pictures,
+            },
+          },
+        });
+      };
+      reader.readAsDataURL(file.originFileObj);
+    }
+  };
+  const removePicture = (index) => {
+    let pictures = stepOne.identityPictures;
+    if (index === 0) {
+      delete pictures.front;
+    } else {
+      delete pictures.back;
+    }
+    dispatch({
+      type: "SET_STEP_ONE",
+      stepOne: {
+        ...stepOne,
+        ...{
+          identityPictures: pictures,
         },
-      });
-    };
-    reader.readAsDataURL(file.originFileObj);
+      },
+    });
   };
   const search = (e) => {
     const { value } = e.target;
@@ -170,6 +224,10 @@ const PersonalInfo = (props) => {
       pharma.name.toLowerCase().includes(value.toLowerCase())
     );
     setPharmacyToDisplay(temp);
+  };
+  const changePharmacy = (pharmacy, index) => {
+    setPharmacy(pharmacy);
+    setActiveIndex(index);
   };
   return (
     <div className="column">
@@ -182,16 +240,19 @@ const PersonalInfo = (props) => {
         <div className="tabs">
           <div
             className={step === 0 ? "tab active sub-title" : "tab sub-title"}
+            onClick={() => setStep(0)}
           >
             Personal Info
           </div>
           <div
             className={step === 1 ? "tab active sub-title" : "tab sub-title"}
+            onClick={() => (step > 1 ? setStep(1) : null)}
           >
             Additional Info
           </div>
           <div
             className={step === 2 ? "tab active sub-title" : "tab sub-title"}
+            onClick={() => (step > 2 ? setStep(2) : null)}
           >
             Pharmacy
           </div>
@@ -214,16 +275,22 @@ const PersonalInfo = (props) => {
                   <small className="error-message">{errorStepOne.name}</small>
                 )}
               </Row>
-              <Row className="">
+              <Row className="flex column">
                 <label className={"helper-message m-b-10-px m-t-10-px"}>
                   Date of Birth
                 </label>
-                <Input
+                <Input.Group>
+                <DatePicker
                   type="date"
-                  onChange={(e) => changeForm(e.target.name, e.target.value)}
+                  onChange={(e) => changeForm("dob", e)}
                   name="dob"
-                  value={stepOne.dob}
+                  value={stepOne?.dob ? moment(stepOne.dob, "YYYY/MM/DD") : ''}
+                  format="MM/DD/YYYY"
+                  placeholder="MM/DD/YYYY"
+                  size="large"
+                  style={{ width: "100%" }}
                 />
+                </Input.Group>
                 {errorStepOne.dob && (
                   <small className="error-message">{errorStepOne.dob}</small>
                 )}
@@ -234,42 +301,13 @@ const PersonalInfo = (props) => {
                   </small>
                 )}
               </Row>
-              <div className="m-b-10-px m-t-10-px">
-                <label className={"helper-message m-b-10-px m-t-10-px"}>
-                  Identification Document (front and back of License or Photo
-                  ID)
-                </label>
-                <div>
-                  <Upload
-                    onChange={(e) => addFiles(e)}
-                    customRequest={({ file, onSuccess }) => {
-                      setTimeout(() => {
-                        onSuccess("ok");
-                      }, 0);
-                    }}
-                    accept="image/*"
-                    fileList={stepTwo.identityPictures}
-                  >
-                    <Button icon={<UploadOutlined />}>Click to Select</Button>
-                  </Upload>
-                  <small className="error-message">
-                    {errorStepOne.identityPictures}
-                  </small>
-                </div>
-                {/* <input
-                  type="file"
-                  onChange={(e) =>
-                    changeStepTwo("identityPhoto", e.target.files[0])
-                  }
-                /> */}
-              </div>
               <div className="flex column m-b-10-px m-t-10-px">
                 <label className="helper-message m-b-0-px m-t-10-px">
                   License or Photo ID # (required)
                 </label>
                 <small className="description-message">
-                  Upload your drivers license or legal photo ID issued by your
-                  state, that includes your name, date of birth etc
+                  Unique identification id of your legal photo id issued by your
+                  state
                 </small>
                 <Input
                   name="identityNumber"
@@ -281,6 +319,66 @@ const PersonalInfo = (props) => {
                     Please Enter Licence or Photo ID #
                   </small>
                 )}
+              </div>
+              <div className="m-b-10-px m-t-10-px">
+                <label className={"helper-message m-b-10-px m-t-10-px"}>
+                  Identification Document
+                </label>
+                <small className="description-message">
+                  Upload your drivers license or legal photo ID issued by your
+                  state, that includes your name, date of birth etc
+                </small>
+                <div className="upload-button">
+                  <Upload
+                    onChange={(e) => addFront(e)}
+                    customRequest={({ file, onSuccess }) => {
+                      setTimeout(() => {
+                        onSuccess("ok");
+                      }, 0);
+                    }}
+                    accept="image/*"
+                    fileList={
+                      stepOne.identityPictures?.front
+                        ? [stepOne.identityPictures.front]
+                        : []
+                    }
+                    defaultFileList={[]}
+                    listType="picture"
+                    onRemove={(file) => removePicture(0)}
+                  >
+                    <Button icon={<UploadOutlined />}>Upload Front</Button>
+                  </Upload>
+                </div>
+                <div className="upload-button">
+                  <Upload
+                    onChange={(e) => addBack(e)}
+                    customRequest={({ file, onSuccess }) => {
+                      setTimeout(() => {
+                        onSuccess("ok");
+                      }, 0);
+                    }}
+                    accept="image/*"
+                    fileList={
+                      stepOne.identityPictures?.back
+                        ? [stepOne.identityPictures.back]
+                        : []
+                    }
+                    defaultFileList={[]}
+                    listType="picture"
+                    onRemove={(file) => removePicture(1)}
+                  >
+                    <Button icon={<UploadOutlined />}>Upload Back</Button>
+                  </Upload>
+                  <small className="error-message">
+                    {errorStepOne.identityPictures}
+                  </small>
+                </div>
+                {/* <input
+                  type="file"
+                  onChange={(e) =>
+                    changeStepTwo("identityPhoto", e.target.files[0])
+                  }
+                /> */}
               </div>
               <p className="error-message">{error}</p>
               <Button
@@ -328,23 +426,23 @@ const PersonalInfo = (props) => {
                     </small>
                   )}
                 </div>
+                <div>
+                  <label className={"helper-message"}>Street</label>
+                  <Input
+                    type="text"
+                    name="street"
+                    onChange={(e) =>
+                      changeStepTwo(e.target.name, e.target.value)
+                    }
+                    value={stepTwo.street}
+                  />
+                  {errorStepTwo.street && (
+                    <small className="error-message">
+                      {errorStepTwo.street}
+                    </small>
+                  )}
+                </div>
                 <div className="justify-space-between">
-                  <div className="street">
-                    <label className={"helper-message"}>Street</label>
-                    <Input
-                      type="text"
-                      name="street"
-                      onChange={(e) =>
-                        changeStepTwo(e.target.name, e.target.value)
-                      }
-                      value={stepTwo.street}
-                    />
-                    {errorStepTwo.street && (
-                      <small className="error-message">
-                        {errorStepTwo.street}
-                      </small>
-                    )}
-                  </div>
                   <div>
                     <label className={"helper-message"}>City</label>
                     <Input
@@ -377,23 +475,24 @@ const PersonalInfo = (props) => {
                       </small>
                     )}
                   </div>
+                  <div>
+                    <label className={"helper-message"}>Zip Code</label>
+                    <Input
+                      type="text"
+                      name="zipcode"
+                      onChange={(e) =>
+                        changeStepTwo(e.target.name, e.target.value)
+                      }
+                      value={stepTwo.zipcode}
+                    />
+                    {errorStepTwo.zipcode && (
+                      <small className="error-message">
+                        {errorStepTwo.zipcode}
+                      </small>
+                    )}
+                  </div>
                 </div>
-                <div>
-                  <label className={"helper-message"}>Zip Code</label>
-                  <Input
-                    type="text"
-                    name="zipcode"
-                    onChange={(e) =>
-                      changeStepTwo(e.target.name, e.target.value)
-                    }
-                    value={stepTwo.zipcode}
-                  />
-                  {errorStepTwo.zipcode && (
-                    <small className="error-message">
-                      {errorStepTwo.zipcode}
-                    </small>
-                  )}
-                </div>
+
                 <Button
                   disabled={loading}
                   loading={loading}
@@ -422,8 +521,13 @@ const PersonalInfo = (props) => {
                 >
                   <List
                     dataSource={pharmacyToDisplay}
-                    renderItem={(item) => (
-                      <List.Item onClick={() => setPharmacy(item)}>
+                    renderItem={(item, index) => (
+                      <List.Item
+                        onClick={() => changePharmacy(item, index)}
+                        className={
+                          activeIndex === index ? "active-pharmacy" : ""
+                        }
+                      >
                         <List.Item.Meta
                           title={item.name}
                           description={item.formatted_address}

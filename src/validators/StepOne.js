@@ -1,5 +1,6 @@
 // validate form values for name and date of birth
 const vaidateNameAndDOB = ({name, dob, identityPictures, identityNumber}) => {
+  console.log(identityPictures)
   const errorStepOne = {
     name: '',
     dob: '',
@@ -10,8 +11,8 @@ const vaidateNameAndDOB = ({name, dob, identityPictures, identityNumber}) => {
   if (!dob) {
     errorStepOne.dob = 'Please enter your date of birth';
   }
-  if (identityPictures?.length === 0 || !identityPictures) {
-    errorStepOne.identityPictures = "Required";
+  if (!identityPictures.front || !identityPictures.back) {
+    errorStepOne.identityPictures = "Please upload front and back of your identity.";
   }
   if(!identityNumber) {
     errorStepOne.identityNumber = "Required";

@@ -6,7 +6,7 @@ const { Content, Header } = Layout;
 const Container = (props) => {
   return (
     <Layout>
-      <Header><Link to="/" className="logo-app"><img src="pharmacy.png" alt="pharmacy" /> Onlineutimeds.com LLC </Link></Header>
+      <Header style={{position: 'sticky', top: 0, zIndex: 1}}><Link to="/" className="logo-app"><img src="pharmacy.png" alt="pharmacy" /> Onlineutimeds.com LLC </Link></Header>
       <Content>{props.children}</Content>
       {/* <Footer>UTI Online ©2021</Footer> */}
     </Layout>

@@ -7,12 +7,17 @@ const Allergies = (props) => {
   const dispatch = useDispatch();
   const [allergy, setAllergy] = useState("");
   const handleInputChange = (e) => {
-    if(e.target.value !== ',') {
+    if(e.target.value[e.target.value.length-1] !== ',') {
       setAllergy(e.target.value);
+    } else if (allergy.length > 0) {
+      let mAllergies = allergies;
+      mAllergies.push(allergy);
+      dispatch({ type: "SET_ALLERGIES", allergies: [...mAllergies] });
+      setAllergy("");
     }
   };
   const keyDown = (e) => {
-    if (e.keyCode === 13 || e.keyCode === 188) {
+    if (e.keyCode === 13 && allergy !== "") {
       let mAllergies = allergies;
       mAllergies.push(allergy);
       dispatch({ type: "SET_ALLERGIES", allergies: [...mAllergies] });
@@ -38,9 +43,9 @@ const Allergies = (props) => {
           <Image src="allergies.svg" preview={false} width={"90%"} />
         </div>
         <div className="flex column vh-90 allergies">
-          <h2 className="title">Allergies</h2>
+          <h2 className="title">Do you have any allergies?</h2>
           <small className="helper-message m-t-10-px">
-            List down any allergies you may have
+            List down any allergies you may have.<br/>Separate each allergy with a comma or press Enter key.
           </small>
           <br />
           <Input
@@ -66,7 +71,7 @@ const Allergies = (props) => {
           </div>
           <div className="action">
             <Button onClick={() => incrementStep()} type="primary">
-              Next
+              Continue
             </Button>
           </div>
         </div>

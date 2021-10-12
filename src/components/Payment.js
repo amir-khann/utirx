@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import moment from 'moment';
 import { useSelector } from "react-redux";
 import { loadStripe } from "@stripe/stripe-js";
 import {
@@ -7,7 +8,7 @@ import {
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
-import { Button, Input, Typography } from "antd";
+import { Button, Typography } from "antd";
 import axios from "axios";
 import config from "../config";
 
@@ -65,21 +66,18 @@ const Form = (props) => {
     <div className="flex vh-90 card-details">
       <div className={"card responsive m-t-10-px"}>
         <Title level={2}>Card Details</Title>
-        <div className="m-b-10-px">
-          <label className="m-b-10-px">Name</label>
-          <Input value={stepOne.name} readOnly />
+        <div className="flex column details">
+          <small style={{fontWeight: 'bold', fontSize: '20px'}}>Name</small>
+          <label style={{fontSize: "15px"}}>{stepOne.name}</label>
         </div>
-        <div className="m-b-10-px">
-          <label className="m-b-10-px">DOB</label>
-          <Input value={stepOne.dob} readOnly />
+        <div className="flex column details">
+          <small style={{fontWeight: 'bold', fontSize: '20px'}}>DOB</small>
+          <label style={{fontSize: "15px"}}>{moment(stepOne.dob).format("MM/DD/YYYY")}</label>
         </div>
-        <div className="m-b-10-px">
-          <label className="m-b-10-px">Pharmacy</label>
-          <Input value={apiRequest.pharmacy.name} readOnly />
-        </div>
-        <div className="m-b-10-px">
-          <label className="m-b-10-px">Prescription Free</label>
-          <Input value={`$ ${price}`} readOnly />
+        <div className="flex column details">
+          <small style={{fontWeight: 'bold', fontSize: '20px'}}>Pharmacy</small>
+          <label style={{fontSize: "15px"}}>{apiRequest.pharmacy.name}</label>
+          <label style={{fontSize: "15px"}}>{apiRequest.pharmacy.address}</label>
         </div>
         {/* <Col span={24}>
           <Row>
