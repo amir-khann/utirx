@@ -9,6 +9,7 @@ import moment from "moment";
 
 import vaidateNameAndDOB from "../validators/StepOne";
 import validateStepTwo from "../validators/StepTwo";
+import Payment from "./Payment";
 
 const PersonalInfo = (props) => {
   const { stepOne, stepTwo, stepThree } = useSelector((state) => state);
@@ -64,7 +65,6 @@ const PersonalInfo = (props) => {
     try {
       e.preventDefault();
       const errorsStepOne = vaidateNameAndDOB(stepOne);
-      console.log(errorsStepOne);
       if (
         errorsStepOne.name ||
         errorsStepOne.dob ||
@@ -87,7 +87,7 @@ const PersonalInfo = (props) => {
           setStep(step + 1);
         } else {
           setError(
-            `You have already requested a prescription in last ${data.settings[0].prescriptionWindow} days. You cannot request a new one.`
+            `It seems you have already requested a prescription in last ${data.settings[0].prescriptionWindow} days. You cannot request a new prescription at this time.`
           );
           setLoading(false);
         }
@@ -140,18 +140,20 @@ const PersonalInfo = (props) => {
         type: "SET_STEP_THREE",
         stepThree: { ...{ pharmacy: manualPharmacy } },
       });
-      props.incrementStep({
+      props.dispatchFormValues({
         ...stepOne,
         ...stepTwo,
         ...{ pharmacy: manualPharmacy },
       });
+      setStep(step + 1);
     } else {
       const { name, formatted_address } = pharmacy;
-      props.incrementStep({
+      props.dispatchFormValues({
         ...stepOne,
         ...stepTwo,
         ...{ pharmacy: { name, address: formatted_address } },
       });
+      setStep(step + 1);
     }
   };
 
@@ -256,6 +258,12 @@ const PersonalInfo = (props) => {
           >
             Pharmacy
           </div>
+          <div
+            className={step === 3 ? "tab active sub-title" : "tab sub-title"}
+            onClick={() => (step > 3 ? setStep(3) : null)}
+          >
+            Payment
+          </div>
         </div>
         <Col span={24}>
           {step === 0 && (
@@ -280,16 +288,18 @@ const PersonalInfo = (props) => {
                   Date of Birth
                 </label>
                 <Input.Group>
-                <DatePicker
-                  type="date"
-                  onChange={(e) => changeForm("dob", e)}
-                  name="dob"
-                  value={stepOne?.dob ? moment(stepOne.dob, "YYYY/MM/DD") : ''}
-                  format="MM/DD/YYYY"
-                  placeholder="MM/DD/YYYY"
-                  size="large"
-                  style={{ width: "100%" }}
-                />
+                  <DatePicker
+                    type="date"
+                    onChange={(e) => changeForm("dob", e)}
+                    name="dob"
+                    value={
+                      stepOne?.dob ? moment(stepOne.dob, "YYYY/MM/DD") : ""
+                    }
+                    format="MM/DD/YYYY"
+                    placeholder="MM/DD/YYYY"
+                    size="large"
+                    style={{ width: "100%" }}
+                  />
                 </Input.Group>
                 {errorStepOne.dob && (
                   <small className="error-message">{errorStepOne.dob}</small>
@@ -500,14 +510,16 @@ const PersonalInfo = (props) => {
                   type="primary"
                   style={{ marginTop: "10px" }}
                 >
-                  Next
+                  Continue
                 </Button>
               </form>
             </div>
           )}
           {step === 2 && (
+            <>
+            <h3 style={{lineHeight: 2}}>Please select a pharmacy. If you can't find the desired pharmacy in the list below type its name and address in the fields below.</h3>
             <div style={{ display: "flex" }}>
-              <div style={{}}>
+              <div className="full-width-on-mobile">
                 <div className="search">
                   <label className="helper-message">Search</label>
                   <Input name="search" onChange={(e) => search(e)} />
@@ -515,6 +527,7 @@ const PersonalInfo = (props) => {
                 <div
                   style={{
                     height: "50vh",
+                    width: "100%",
                     overflow: "scroll",
                   }}
                   className="places"
@@ -562,7 +575,7 @@ const PersonalInfo = (props) => {
                   onClick={() => selectPharmacy()}
                   style={{ marginTop: "10px" }}
                 >
-                  Next
+                  Continue
                 </Button>
               </div>
               <MapComponent
@@ -572,7 +585,13 @@ const PersonalInfo = (props) => {
                 className="hide-on-mobile"
               />
             </div>
+            </>
           )}
+          {
+            step === 3 && (
+              <Payment incrementStep={props.incrementStep} decrementStep={props.decrementStep} />
+            )
+          }
         </Col>
       </div>
     </div>

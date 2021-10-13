@@ -10,7 +10,6 @@ import Consent from "../components/Consent";
 import config from "../config";
 import Allergies from "../components/Allergies";
 import PersonalInfo from "../components/PersonalInfo";
-import Payment from "../components/Payment";
 import Success from "../components/Success";
 import Container from "../components/Container";
 import Loader from "../components/Loader";
@@ -83,6 +82,13 @@ const Request = () => {
     dispatch({ type: "SET_STEP", step: step + 1 });
   };
 
+  const dispatchFormValues = (data) => {
+    dispatch({
+      type: "SET_API_REQUEST",
+      apiRequest: { ...apiRequest, ...data },
+    });
+  }
+
   const decrementStep = () => {
     if (step > 0) {
       dispatch({ type: "SET_STEP", step: step - 1 });
@@ -90,9 +96,6 @@ const Request = () => {
   };
 
   useEffect(() => {
-    if (step === 5) {
-      dispatch({ type: "SET_STEP", step: 0 });
-    }
     if (questions.length === 0) {
       axios.get(`${config.baseUrl}questions`).then((res) => {
         dispatch({ type: "SET_QUESTIONS", questions: res.data });
@@ -131,9 +134,8 @@ const Request = () => {
         <PersonalInfo
           incrementStep={incrementStep}
           decrementStep={decrementStep}
+          dispatchFormValues={dispatchFormValues}
         />
-      ) : step === 4 ? (
-        <Payment incrementStep={incrementStep} decrementStep={decrementStep} />
       ) : (
         <Success history={history} />
       )}

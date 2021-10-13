@@ -64,20 +64,20 @@ const Form = (props) => {
 
   return (
     <div className="flex vh-90 card-details">
-      <div className={"card responsive m-t-10-px"}>
-        <Title level={2}>Card Details</Title>
+      <div className={"card m-t-10-px"}>
+        <Title level={2}>Payment Information</Title>
         <div className="flex column details">
-          <small style={{fontWeight: 'bold', fontSize: '20px'}}>Name</small>
-          <label style={{fontSize: "15px"}}>{stepOne.name}</label>
+          <small style={{fontWeight: 'lighter', fontSize: '15px'}}>Name</small>
+          <label style={{fontWeight: 'bold', fontSize: "20px"}}>{stepOne.name}</label>
         </div>
         <div className="flex column details">
-          <small style={{fontWeight: 'bold', fontSize: '20px'}}>DOB</small>
-          <label style={{fontSize: "15px"}}>{moment(stepOne.dob).format("MM/DD/YYYY")}</label>
+          <small style={{fontWeight: 'lighter', fontSize: '15px'}}>DOB</small>
+          <label style={{fontWeight: 'bold', fontSize: "20px"}}>{moment(stepOne.dob).format("MM/DD/YYYY")}</label>
         </div>
         <div className="flex column details">
-          <small style={{fontWeight: 'bold', fontSize: '20px'}}>Pharmacy</small>
-          <label style={{fontSize: "15px"}}>{apiRequest.pharmacy.name}</label>
-          <label style={{fontSize: "15px"}}>{apiRequest.pharmacy.address}</label>
+          <small style={{fontWeight: 'lighter', fontSize: '15px'}}>Pharmacy</small>
+          <label style={{fontWeight: 'bold', fontSize: "20px"}}>{apiRequest.pharmacy.name}</label>
+          <label style={{fontWeight: 'bold', fontSize: "20px"}}>{apiRequest.pharmacy.address}</label>
         </div>
         {/* <Col span={24}>
           <Row>
@@ -89,6 +89,7 @@ const Form = (props) => {
             />
           </Row>
         </Col> */}
+        <label style={{fontWeight: 'normal', fontSize: "20px"}}>Credit Card</label>
         <CardElement options={{ ...createOptions(), hidePostalCode: true }} />
         <small className="description-message">{`* You will be charged $${price} and your credit card statement will show "OnlineUTIMeds.com LLC" as a merchant name`}</small>
         <Button
@@ -108,11 +109,6 @@ const Payment = (props) => {
   const stripePromise = loadStripe(process.env.REACT_APP_STRIPE);
   return (
     <div className="column">
-      <div className="back-container">
-        <p className="link-button" onClick={() => props.decrementStep()}>
-          Go Back
-        </p>
-      </div>
       <Elements stripe={stripePromise}>
         <Form incrementStep={props.incrementStep}/>
       </Elements>

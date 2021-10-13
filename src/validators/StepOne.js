@@ -11,8 +11,8 @@ const vaidateNameAndDOB = ({name, dob, identityPictures, identityNumber}) => {
   if (!dob) {
     errorStepOne.dob = 'Please enter your date of birth';
   }
-  if (!identityPictures.front || !identityPictures.back) {
-    errorStepOne.identityPictures = "Please upload front and back of your identity.";
+  if (!identityPictures || !identityPictures.front || !identityPictures.back) {
+    errorStepOne.identityPictures = "Please upload front and back of your identitification document.";
   }
   if(!identityNumber) {
     errorStepOne.identityNumber = "Required";

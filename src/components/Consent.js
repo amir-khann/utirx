@@ -10,20 +10,39 @@ const Consent = (props) => {
   const dispatch = useDispatch();
 
   return (
-    <div className="flex">
-      <div className="back-container flex column sticky">
+    <div className="flex responsive column-on-mobile">
+      <div className="flex column sticky percent-50">
         <p className="link-button" onClick={() => props.decrementStep()}>
           Go Back
         </p>
         <div className="interview-left">
-          <Image src="agreement.svg" preview={false} width={"75%"} style={{objectFit: 'contain'}}/>
+          <Image
+            src="agreement.svg"
+            preview={false}
+            style={{ objectFit: "contain" }}
+          />
         </div>
       </div>
-      <div className="flex float-right consent-container">
+      <div className="back-container show-on-mobile-and-tablet">
+        <p className="link-button" onClick={() => props.decrementStep()}>
+          Go Back
+        </p>
+      </div>
+      <div className="flex consent-container percent-50">
         <div className="flex  column vh-90 consent">
+          <p className="consent-message">
+            Great! You are almost done. Here is the summary of your responses.
+            Please review these and make sure all of the information below is
+            accurate. If you want to change any of your answers, you can click
+            on "Go Back"
+          </p>
           <div className="summary">
             <Summary questions={props.questions} answers={props.answers} />
           </div>
+          <p className="consent-message">
+            If all the information looks good, attest and accept the terms, and
+            hit Continue.
+          </p>
           <div>
             <Checkbox
               onChange={(e) =>
@@ -56,7 +75,8 @@ const Consent = (props) => {
               }
               checked={marketing}
             >
-              I agree to the <Link to="/marketing">HIPAA Marketing Authorization.</Link>
+              I agree to the{" "}
+              <Link to="/marketing">HIPAA Marketing Authorization.</Link>
             </Checkbox>
           </div>
           <Button
