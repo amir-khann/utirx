@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import moment from 'moment';
+import moment from "moment";
 import { useSelector } from "react-redux";
 import { loadStripe } from "@stripe/stripe-js";
 import {
@@ -39,7 +39,7 @@ const Form = (props) => {
   const [price, setPrice] = useState(0);
   const stripe = useStripe();
   const elements = useElements();
-  const { stepOne, apiRequest } = useSelector(state => state)
+  const { stepOne, apiRequest } = useSelector((state) => state);
   useEffect(() => {
     (async () => {
       const { data } = await axios.get(`${config.baseUrl}settings/price`);
@@ -66,18 +66,30 @@ const Form = (props) => {
     <div className="flex vh-90 card-details">
       <div className={"card m-t-10-px"}>
         <Title level={2}>Payment Information</Title>
-        <div className="flex column details">
-          <small style={{fontWeight: 'lighter', fontSize: '15px'}}>Name</small>
-          <label style={{fontWeight: 'bold', fontSize: "20px"}}>{stepOne.name}</label>
+        <div className="flex details">
+          <small style={{ fontWeight: "bold", fontSize: "15px", width: "50%" }}>Name</small>
+          <label style={{ fontWeight: "lighter", fontSize: "20px" }}>
+            {stepOne.name}
+          </label>
         </div>
-        <div className="flex column details">
-          <small style={{fontWeight: 'lighter', fontSize: '15px'}}>DOB</small>
-          <label style={{fontWeight: 'bold', fontSize: "20px"}}>{moment(stepOne.dob).format("MM/DD/YYYY")}</label>
+        <div className="flex details">
+          <small style={{ fontWeight: "bold", fontSize: "15px", width: "50%" }}>DOB</small>
+          <label style={{ fontWeight: "lighter", fontSize: "20px" }}>
+            {moment(stepOne.dob).format("MM/DD/YYYY")}
+          </label>
         </div>
-        <div className="flex column details">
-          <small style={{fontWeight: 'lighter', fontSize: '15px'}}>Pharmacy</small>
-          <label style={{fontWeight: 'bold', fontSize: "20px"}}>{apiRequest.pharmacy.name}</label>
-          <label style={{fontWeight: 'bold', fontSize: "20px"}}>{apiRequest.pharmacy.address}</label>
+        <div className="flex details">
+          <small style={{ fontWeight: "bold", fontSize: "15px", width: "50%" }}>
+            Pharmacy
+          </small>
+          <div className="flex column" style={{width: "50%"}}>
+            <label style={{ fontWeight: "lighter", fontSize: "20px" }}>
+              {apiRequest.pharmacy.name}
+            </label>
+            <label style={{ fontWeight: "lighter", fontSize: "20px" }}>
+              {apiRequest.pharmacy.address}
+            </label>
+          </div>
         </div>
         {/* <Col span={24}>
           <Row>
@@ -89,12 +101,14 @@ const Form = (props) => {
             />
           </Row>
         </Col> */}
-        <label style={{fontWeight: 'normal', fontSize: "20px"}}>Credit Card</label>
+        <label style={{ fontWeight: "bold", fontSize: "20px" }}>
+          Credit Card
+        </label>
         <CardElement options={{ ...createOptions(), hidePostalCode: true }} />
         <small className="description-message">{`* You will be charged $${price} and your credit card statement will show "OnlineUTIMeds.com LLC" as a merchant name`}</small>
         <Button
           type="primary"
-          disabled={!stripe || loading }
+          disabled={!stripe || loading}
           onClick={(event) => handleSubmit(event)}
           loading={loading}
         >
@@ -110,7 +124,7 @@ const Payment = (props) => {
   return (
     <div className="column">
       <Elements stripe={stripePromise}>
-        <Form incrementStep={props.incrementStep}/>
+        <Form incrementStep={props.incrementStep} />
       </Elements>
     </div>
   );

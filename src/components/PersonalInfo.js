@@ -28,6 +28,7 @@ const PersonalInfo = (props) => {
   const [errorStepOne, setErrorStepOne] = useState({});
   const [errorStepTwo, setErrorStepTwo] = useState({});
   const [activeIndex, setActiveIndex] = useState(0);
+  const [errors, setErrors] = useState({});
 
   const changeForm = (name, value) => {
     setError(false);
@@ -43,7 +44,8 @@ const PersonalInfo = (props) => {
           setDateError(true);
         }
         let temp = stepOne;
-        temp[name] = value || now;
+        temp[name] = value || "";
+        console.log(value);
         dispatch({ type: "SET_STEP_ONE", stepOne: { ...temp } });
         console.log(temp);
       } catch (error) {
@@ -129,12 +131,40 @@ const PersonalInfo = (props) => {
     }
   };
   const changeStepThree = (name, value) => {
-    console.log(name, value);
     let temp = stepThree.pharmacy;
     temp[name] = value;
     setManualPharmacy(temp);
   };
   const selectPharmacy = () => {
+    // if((!manualPharmacy.name && !manualPharmacy.address)) {
+    //   if (!manualPharmacy.name) {
+    //     setErrors({
+    //       ...errors,
+    //       name: "Please enter pharmacy name",
+    //       address: "",
+    //       pharmacy: "",
+    //     });
+    //     return;
+    //   }
+    //   if (!manualPharmacy.address) {
+    //     setErrors({
+    //       ...errors,
+    //       address: "Please enter pharmacy address",
+    //       name: "",
+    //       pharmacy: "",
+    //     });
+    //     return;
+    //   }
+    // }
+    // if(!pharmacy?.name && !pharmacy?.formatted_address && pharmacies.length > 0) {
+    //   setErrors({
+    //     ...errors,
+    //     pharmacy: "Please select pharmacy",
+    //     name: "",
+    //     address: "",
+    //   });
+    //   return;
+    // }
     if (manualPharmacy.name && manualPharmacy.address) {
       dispatch({
         type: "SET_STEP_THREE",
@@ -147,6 +177,14 @@ const PersonalInfo = (props) => {
       });
       setStep(step + 1);
     } else {
+      if(pharmacies.length === 0) {
+        setErrors({
+          ...errors,
+          name: "Please enter pharmacy name",
+          address: "Please enter pharmacy address"
+        });
+        return;
+      }
       const { name, formatted_address } = pharmacy;
       props.dispatchFormValues({
         ...stepOne,
@@ -229,6 +267,10 @@ const PersonalInfo = (props) => {
   };
   const changePharmacy = (pharmacy, index) => {
     setPharmacy(pharmacy);
+    setManualPharmacy({
+      name: '',
+      address: '',
+    });
     setActiveIndex(index);
   };
   return (
@@ -326,7 +368,7 @@ const PersonalInfo = (props) => {
                 />
                 {errorStepOne.identityNumber && (
                   <small className="error-message">
-                    Please Enter Licence or Photo ID #
+                    Please Enter License or Photo ID #
                   </small>
                 )}
               </div>
@@ -355,6 +397,7 @@ const PersonalInfo = (props) => {
                     defaultFileList={[]}
                     listType="picture"
                     onRemove={(file) => removePicture(0)}
+                    onPreview={(file) => {}}
                   >
                     <Button icon={<UploadOutlined />}>Upload Front</Button>
                   </Upload>
@@ -376,6 +419,7 @@ const PersonalInfo = (props) => {
                     defaultFileList={[]}
                     listType="picture"
                     onRemove={(file) => removePicture(1)}
+                    onPreview={(file) => {}}
                   >
                     <Button icon={<UploadOutlined />}>Upload Back</Button>
                   </Upload>
@@ -548,6 +592,7 @@ const PersonalInfo = (props) => {
                       </List.Item>
                     )}
                   />
+                  {errors.pharmacy && (<small className="error-message">{errors.pharmacy}</small>)}
                 </div>
                 OR
                 <form style={{ marginRight: "20px" }}>
@@ -559,6 +604,7 @@ const PersonalInfo = (props) => {
                       }
                       name="name"
                     />
+                    {errors.name && (<small className="error-message">{errors.name}</small>)}
                   </div>
                   <div>
                     <label className={"helper-message"}>Pharmacy Address</label>
@@ -568,6 +614,7 @@ const PersonalInfo = (props) => {
                       }
                       name="address"
                     />
+                    {errors.address && (<small className="error-message">{errors.address}</small>)}
                   </div>
                 </form>
                 <Button
@@ -579,8 +626,8 @@ const PersonalInfo = (props) => {
                 </Button>
               </div>
               <MapComponent
-                lat={pharmacy.geometry.location.lat}
-                lng={pharmacy.geometry.location.lng}
+                lat={pharmacy?.geometry?.location?.lat || 0}
+                lng={pharmacy?.geometry?.location?.lng || 0}
                 style={{ maxWidth: "60%" }}
                 className="hide-on-mobile"
               />

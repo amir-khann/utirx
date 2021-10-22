@@ -4,7 +4,7 @@
 }
 .tabs .tab {
   cursor: pointer;
-  color: #6b63ff;
+  color: rgba(0,0,0,0.45);
 }
 
 .tab {
@@ -21,6 +21,7 @@
 }
 
 .active {
+  color: #6b63ff !important;
   font-weight: bold;
 }
 
@@ -296,7 +297,8 @@ small {
   display: flex;
   margin: 5px 5px 0 0;
   border: 1px solid gray;
-  border-radius: 20px;
+  border-radius: 8px;
+  -webkit-justify-content: space-between;
   justify-content: space-between;
   padding: 2px 2px 2px 4px;
   background: #6b63ff;
@@ -329,6 +331,11 @@ small {
 
 .chip .allergy {
   margin-right: 5px;
+  
+}
+
+.allergy, .close-button {
+  line-height: 193%;
 }
 
 .chip .close-button {
@@ -406,7 +413,7 @@ form {
 }
 
 .search {
-  line-height: 15px;
+  line-height: 30px;
 }
 
 .helper-message {
@@ -490,6 +497,12 @@ form {
   width: 90%;
   border-top: 100px solid #fff;
 }
+.warning-message {
+  line-height: 2;
+  font-size: medium;
+  width: 90%;
+  border-top: 20px solid #fff;
+}
 .show-on-mobile-and-tablet {
   display: none;
 }
@@ -510,7 +523,14 @@ form {
   margin-right: auto;
 }
 
-@media only screen and (min-device-width: 320px) and (max-device-width: 550px) and (-webkit-min-device-pixel-ratio: 2) {
+.extra-padding {
+  min-height: 10%;
+}
+.ant-result-subtitle {
+  color:  #000 !important;
+}
+
+@media only screen and (min-device-width: 280px) and (max-device-width: 550px) and (-webkit-min-device-pixel-ratio: 2) {
   .responsive {
     height: 100%;
     max-width: 90%;

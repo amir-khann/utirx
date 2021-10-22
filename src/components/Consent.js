@@ -31,15 +31,16 @@ const Consent = (props) => {
       <div className="flex consent-container percent-50">
         <div className="flex  column vh-90 consent">
           <p className="consent-message">
-            Great! You are almost done. Here is the summary of your responses.
+            <b style={{margin: 0, padding: 0}}>Great! You are almost done.</b> 
+            Here is the summary of your responses.
             Please review these and make sure all of the information below is
-            accurate. If you want to change any of your answers, you can click
+            accurate.<br/> If you want to change any of your answers, you can click
             on "Go Back"
           </p>
           <div className="summary">
             <Summary questions={props.questions} answers={props.answers} />
           </div>
-          <p className="consent-message">
+          <p className="warning-message">
             If all the information looks good, attest and accept the terms, and
             hit Continue.
           </p>
@@ -86,6 +87,7 @@ const Consent = (props) => {
           >
             Continue
           </Button>
+          <div className="extra-padding"></div>
         </div>
       </div>
     </div>

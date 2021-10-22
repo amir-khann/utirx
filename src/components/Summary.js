@@ -32,7 +32,7 @@ const Summary = ({questions, answers}) => {
     setSummary(dataSource)
   }, [])
   return (
-        <Table columns={columns} dataSource={summary} pagination={false}  className="scroll-table"/>
+        <Table columns={columns} dataSource={summary} pagination={false}/>
   )
 }
 

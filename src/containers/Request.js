@@ -58,13 +58,13 @@ const Request = () => {
         },
       });
     }
+    // if (step === 3) {
+    //   dispatch({
+    //     type: "SET_API_REQUEST",
+    //     apiRequest: { ...apiRequest, ...data },
+    //   });
+    // }
     if (step === 3) {
-      dispatch({
-        type: "SET_API_REQUEST",
-        apiRequest: { ...apiRequest, ...data },
-      });
-    }
-    if (step === 4) {
       const response = await axios.post(`${config.baseUrl}request/card`, {
         ...apiRequest,
         ...data,

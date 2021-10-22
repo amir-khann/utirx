@@ -18,7 +18,7 @@ const Success = (props) => {
             Doctor will send the prescription to your selected pharmacy.`}
             extra={
                 [
-                    <p style={{color: "rgba(0,0,0,0.45)"}}>{`Here is your confirmation ID:  ${apiRequest.payment.id}`}</p>,
+                    <p style={{color: "rgba(0,0,0)"}}>{`Here is your confirmation ID:  ${apiRequest.payment.id}`}</p>,
                     <Button type="primary" onClick={() => goBack()}>Go to Homepage</Button>
                 ]
             }/>

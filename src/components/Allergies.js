@@ -42,11 +42,11 @@ const Allergies = (props) => {
         <div className="interview">
           <Image src="allergies.svg" preview={false} width={"90%"} />
         </div>
-        <div className="flex column vh-90 allergies">
-          <h2 className="title">Do you have any allergies?</h2>
-          <small className="helper-message m-t-10-px">
+        <div className="flex column vh-90 allergies question">
+          <p>Do you have any allergies?</p>
+          <p className="helper-message m-t-10-px">
             List down any allergies you may have.<br/>Separate each allergy with a comma or press Enter key.
-          </small>
+          </p>
           <br />
           <Input
             onChange={handleInputChange}
