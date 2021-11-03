@@ -136,35 +136,6 @@ const PersonalInfo = (props) => {
     setManualPharmacy(temp);
   };
   const selectPharmacy = () => {
-    // if((!manualPharmacy.name && !manualPharmacy.address)) {
-    //   if (!manualPharmacy.name) {
-    //     setErrors({
-    //       ...errors,
-    //       name: "Please enter pharmacy name",
-    //       address: "",
-    //       pharmacy: "",
-    //     });
-    //     return;
-    //   }
-    //   if (!manualPharmacy.address) {
-    //     setErrors({
-    //       ...errors,
-    //       address: "Please enter pharmacy address",
-    //       name: "",
-    //       pharmacy: "",
-    //     });
-    //     return;
-    //   }
-    // }
-    // if(!pharmacy?.name && !pharmacy?.formatted_address && pharmacies.length > 0) {
-    //   setErrors({
-    //     ...errors,
-    //     pharmacy: "Please select pharmacy",
-    //     name: "",
-    //     address: "",
-    //   });
-    //   return;
-    // }
     if (manualPharmacy.name && manualPharmacy.address) {
       dispatch({
         type: "SET_STEP_THREE",
