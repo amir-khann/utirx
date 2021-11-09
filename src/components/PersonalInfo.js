@@ -3,9 +3,10 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import config from "../config";
 import MapComponent from "./MapComponent";
-import { Input, Button, Upload, List, Row, Col, DatePicker } from "antd";
+import { Input, Button, Upload, List, Row, Col } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import moment from "moment";
+import MaskedInput from "antd-mask-input";
 
 import vaidateNameAndDOB from "../validators/StepOne";
 import validateStepTwo from "../validators/StepTwo";
@@ -32,30 +33,9 @@ const PersonalInfo = (props) => {
 
   const changeForm = (name, value) => {
     setError(false);
-    if (name === "dob") {
-      try {
-        const now = moment();
-        const dob = value;
-        const age = now.diff(dob, "years");
-        console.log("age ", age);
-        if (age >= 18 && age <= 65) {
-          setDateError(false);
-        } else {
-          setDateError(true);
-        }
-        let temp = stepOne;
-        temp[name] = value || "";
-        console.log(value);
-        dispatch({ type: "SET_STEP_ONE", stepOne: { ...temp } });
-        console.log(temp);
-      } catch (error) {
-        throw error;
-      }
-    } else {
-      let temp = stepOne;
-      temp[name] = value;
-      dispatch({ type: "SET_STEP_ONE", stepOne: { ...temp } });
-    }
+    let temp = stepOne;
+    temp[name] = value;
+    dispatch({ type: "SET_STEP_ONE", stepOne: { ...temp } });
   };
   const changeStepTwo = (name, value) => {
     console.log(value);
@@ -68,7 +48,8 @@ const PersonalInfo = (props) => {
       e.preventDefault();
       const errorsStepOne = vaidateNameAndDOB(stepOne);
       if (
-        errorsStepOne.name ||
+        errorsStepOne.firstName ||
+        errorsStepOne.lastName ||
         errorsStepOne.dob ||
         errorsStepOne.identityNumber ||
         errorsStepOne.identityPictures
@@ -81,7 +62,7 @@ const PersonalInfo = (props) => {
         const { data } = await axios.post(
           `${config.baseUrl}request/get-request-by-name`,
           {
-            identityNumber: stepOne.identityNumber,
+            identityNumber: stepOne.identityNumber.replace(/[^a-zA-Z0-9]/g, ""),
           }
         );
         if (!data.request.length) {
@@ -148,11 +129,11 @@ const PersonalInfo = (props) => {
       });
       setStep(step + 1);
     } else {
-      if(pharmacies.length === 0) {
+      if (pharmacies.length === 0) {
         setErrors({
           ...errors,
           name: "Please enter pharmacy name",
-          address: "Please enter pharmacy address"
+          address: "Please enter pharmacy address",
         });
         return;
       }
@@ -239,11 +220,43 @@ const PersonalInfo = (props) => {
   const changePharmacy = (pharmacy, index) => {
     setPharmacy(pharmacy);
     setManualPharmacy({
-      name: '',
-      address: '',
+      name: "",
+      address: "",
     });
     setActiveIndex(index);
   };
+  const dobChanged = (e) => {
+    setDateError();
+    if (e.target.value.length === 0) {
+      const temp = stepOne;
+      temp.dob = "";
+      dispatch({
+        type: "SET_STEP_ONE",
+        stepOne: {
+          ...temp,
+        },
+      });
+      return;
+    }
+    const now = moment();
+    const dob = moment(e.target.value, "MM/DD/YYYY", true);
+    if (dob.isValid()) {
+      const age = now.diff(dob, "years");
+      if (age < 18 || age > 65) {
+        setDateError(true);
+      } else {
+        const temp = stepOne;
+        temp.dob = dob;
+        dispatch({
+          type: "SET_STEP_ONE",
+          stepOne: {
+            ...temp,
+          },
+        });
+      }
+    }
+  };
+
   return (
     <div className="column">
       <div className="back-container">
@@ -282,38 +295,68 @@ const PersonalInfo = (props) => {
           {step === 0 && (
             <form>
               <Row className="">
-                <label className={"helper-message m-b-10-px m-t-10-px"}>
-                  Name
-                </label>
-                <Input
-                  placeholder={"Full Name"}
-                  type="text"
-                  onChange={(e) => changeForm(e.target.name, e.target.value)}
-                  name="name"
-                  value={stepOne.name}
-                />
-                {errorStepOne.name && (
-                  <small className="error-message">{errorStepOne.name}</small>
-                )}
+                <Col span={8}>
+                  <label className={"helper-message m-b-10-px m-t-10-px"}>
+                    First Name
+                  </label>
+                  <Input
+                    placeholder={"First Name"}
+                    type="text"
+                    onChange={(e) => changeForm(e.target.name, e.target.value)}
+                    name="firstName"
+                    value={stepOne.firstName}
+                  />
+                  {errorStepOne.firstName && (
+                    <small className="error-message">
+                      {errorStepOne.firstName}
+                    </small>
+                  )}
+                </Col>
+                <Col span={8}>
+                  <label className={"helper-message m-b-10-px m-t-10-px"}>
+                    Middle Name (optional)
+                  </label>
+                  <Input
+                    placeholder={"Middle Name"}
+                    type="text"
+                    onChange={(e) => changeForm(e.target.name, e.target.value)}
+                    name="middleName"
+                    value={stepOne.middleName}
+                  />
+                </Col>
+                <Col span={8}>
+                  <label className={"helper-message m-b-10-px m-t-10-px"}>
+                    Last Name
+                  </label>
+                  <Input
+                    placeholder={"Last Name"}
+                    type="text"
+                    onChange={(e) => changeForm(e.target.name, e.target.value)}
+                    name="lastName"
+                    value={stepOne.lastName}
+                  />
+                  {errorStepOne.lastName && (
+                    <small className="error-message">
+                      {errorStepOne.lastName}
+                    </small>
+                  )}
+                </Col>
               </Row>
               <Row className="flex column">
                 <label className={"helper-message m-b-10-px m-t-10-px"}>
                   Date of Birth
                 </label>
-                <Input.Group>
-                  <DatePicker
-                    type="date"
-                    onChange={(e) => changeForm("dob", e)}
-                    name="dob"
-                    value={
-                      stepOne?.dob ? moment(stepOne.dob, "YYYY/MM/DD") : ""
-                    }
-                    format="MM/DD/YYYY"
-                    placeholder="MM/DD/YYYY"
-                    size="large"
-                    style={{ width: "100%" }}
-                  />
-                </Input.Group>
+                <MaskedInput
+                  mask="11/11/1111"
+                  name="dob"
+                  size="20"
+                  value={
+                    (stepOne.dob && moment(stepOne.dob).format("MM/DD/YYYY")) ||
+                    ""
+                  }
+                  onChange={(e) => dobChanged(e)}
+                  placeholder="MM/DD/YYYY"
+                />
                 {errorStepOne.dob && (
                   <small className="error-message">{errorStepOne.dob}</small>
                 )}
@@ -437,13 +480,23 @@ const PersonalInfo = (props) => {
                 </div>
                 <div>
                   <label className={"helper-message"}>Phone Number</label>
-                  <Input
+                  {/* <Input
                     type="text"
                     name="phoneNumber"
                     onChange={(e) =>
                       changeStepTwo(e.target.name, e.target.value)
                     }
                     value={stepTwo.phoneNumber}
+                  /> */}
+                  <MaskedInput
+                    mask="(111) 111-1111"
+                    name="phoneNumber"
+                    size="20"
+                    value={stepTwo.phoneNumber}
+                    onChange={(e) =>
+                      changeStepTwo(e.target.name, e.target.value)
+                    }
+                    placeholder="(999) 999-9999"
                   />
                   {errorStepTwo.phoneNumber && (
                     <small className="error-message">
@@ -532,84 +585,98 @@ const PersonalInfo = (props) => {
           )}
           {step === 2 && (
             <>
-            <h3 style={{lineHeight: 2}}>Please select a pharmacy. If you can't find the desired pharmacy in the list below type its name and address in the fields below.</h3>
-            <div style={{ display: "flex" }}>
-              <div className="full-width-on-mobile">
-                <div className="search">
-                  <label className="helper-message">Search</label>
-                  <Input name="search" onChange={(e) => search(e)} />
-                </div>
-                <div
-                  style={{
-                    height: "50vh",
-                    width: "100%",
-                    overflow: "scroll",
-                  }}
-                  className="places"
-                >
-                  <List
-                    dataSource={pharmacyToDisplay}
-                    renderItem={(item, index) => (
-                      <List.Item
-                        onClick={() => changePharmacy(item, index)}
-                        className={
-                          activeIndex === index ? "active-pharmacy" : ""
-                        }
-                      >
-                        <List.Item.Meta
-                          title={item.name}
-                          description={item.formatted_address}
-                        />
-                      </List.Item>
+              <h3 style={{ lineHeight: 2 }}>
+                Please select a pharmacy. If you can't find the desired pharmacy
+                in the list below type its name and address in the fields below.
+              </h3>
+              <div style={{ display: "flex" }}>
+                <div className="full-width-on-mobile">
+                  <div className="search">
+                    <label className="helper-message">Search</label>
+                    <Input name="search" onChange={(e) => search(e)} />
+                  </div>
+                  <div
+                    style={{
+                      height: "50vh",
+                      width: "100%",
+                      overflow: "scroll",
+                    }}
+                    className="places"
+                  >
+                    <List
+                      dataSource={pharmacyToDisplay}
+                      renderItem={(item, index) => (
+                        <List.Item
+                          onClick={() => changePharmacy(item, index)}
+                          className={
+                            activeIndex === index ? "active-pharmacy" : ""
+                          }
+                        >
+                          <List.Item.Meta
+                            title={item.name}
+                            description={item.formatted_address}
+                          />
+                        </List.Item>
+                      )}
+                    />
+                    {errors.pharmacy && (
+                      <small className="error-message">{errors.pharmacy}</small>
                     )}
-                  />
-                  {errors.pharmacy && (<small className="error-message">{errors.pharmacy}</small>)}
+                  </div>
+                  OR
+                  <form style={{ marginRight: "20px" }}>
+                    <div>
+                      <label className={"helper-message"}>Pharmacy Name</label>
+                      <Input
+                        onChange={(e) =>
+                          changeStepThree(e.target.name, e.target.value)
+                        }
+                        name="name"
+                      />
+                      {errors.name && (
+                        <small className="error-message">{errors.name}</small>
+                      )}
+                    </div>
+                    <div>
+                      <label className={"helper-message"}>
+                        Pharmacy Address
+                      </label>
+                      <Input
+                        onChange={(e) =>
+                          changeStepThree(e.target.name, e.target.value)
+                        }
+                        name="address"
+                      />
+                      {errors.address && (
+                        <small className="error-message">
+                          {errors.address}
+                        </small>
+                      )}
+                    </div>
+                  </form>
+                  <Button
+                    type="primary"
+                    onClick={() => selectPharmacy()}
+                    style={{ marginTop: "10px" }}
+                  >
+                    Continue
+                  </Button>
                 </div>
-                OR
-                <form style={{ marginRight: "20px" }}>
-                  <div>
-                    <label className={"helper-message"}>Pharmacy Name</label>
-                    <Input
-                      onChange={(e) =>
-                        changeStepThree(e.target.name, e.target.value)
-                      }
-                      name="name"
-                    />
-                    {errors.name && (<small className="error-message">{errors.name}</small>)}
-                  </div>
-                  <div>
-                    <label className={"helper-message"}>Pharmacy Address</label>
-                    <Input
-                      onChange={(e) =>
-                        changeStepThree(e.target.name, e.target.value)
-                      }
-                      name="address"
-                    />
-                    {errors.address && (<small className="error-message">{errors.address}</small>)}
-                  </div>
-                </form>
-                <Button
-                  type="primary"
-                  onClick={() => selectPharmacy()}
-                  style={{ marginTop: "10px" }}
-                >
-                  Continue
-                </Button>
+                <MapComponent
+                  lat={pharmacy?.geometry?.location?.lat || 0}
+                  lng={pharmacy?.geometry?.location?.lng || 0}
+                  style={{ maxWidth: "60%" }}
+                  className="hide-on-mobile"
+                />
               </div>
-              <MapComponent
-                lat={pharmacy?.geometry?.location?.lat || 0}
-                lng={pharmacy?.geometry?.location?.lng || 0}
-                style={{ maxWidth: "60%" }}
-                className="hide-on-mobile"
-              />
-            </div>
             </>
           )}
-          {
-            step === 3 && (
-              <Payment incrementStep={props.incrementStep} decrementStep={props.decrementStep} />
-            )
-          }
+          {step === 3 && (
+            <Payment
+              incrementStep={props.incrementStep}
+              decrementStep={props.decrementStep}
+            />
+          )}
         </Col>
       </div>
     </div>

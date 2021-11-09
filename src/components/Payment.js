@@ -69,7 +69,7 @@ const Form = (props) => {
         <div className="flex details">
           <small style={{ fontWeight: "bold", fontSize: "15px", width: "50%" }}>Name</small>
           <label style={{ fontWeight: "lighter", fontSize: "20px" }}>
-            {stepOne.name}
+            {`${stepOne.firstName} ${stepOne.middleName} ${stepOne.lastName}`}
           </label>
         </div>
         <div className="flex details">

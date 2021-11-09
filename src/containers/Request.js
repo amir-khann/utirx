@@ -69,12 +69,15 @@ const Request = () => {
         ...apiRequest,
         ...data,
       });
+      const temp = apiRequest;
+      temp.phoneNumber = temp.phoneNumber.replace(/[^a-zA-Z0-9]/g, '');
+      temp.identityNumber = temp.identityNumber.replace(/[^a-zA-Z0-9]/g, '');
       dispatch({
         type: "SET_API_REQUEST",
-        apiRequest: { ...apiRequest, ...response.data },
+        apiRequest: { ...temp, ...response.data },
       });
       await axios.post(`${config.baseUrl}request`, {
-        ...apiRequest,
+        ...temp,
         ...response.data,
       });
     }

@@ -1,12 +1,15 @@
 // validate form values for name and date of birth
-const vaidateNameAndDOB = ({name, dob, identityPictures, identityNumber}) => {
+const vaidateNameAndDOB = ({firstName, lastName, dob, identityPictures, identityNumber}) => {
   console.log(identityPictures)
   const errorStepOne = {
     name: '',
     dob: '',
   };
-  if (!name) {
-    errorStepOne.name = 'Please enter your name';
+  if (!firstName) {
+    errorStepOne.firstName = 'Please enter your first name';
+  }
+  if (!lastName) {
+    errorStepOne.lastName = 'Please enter your last name';
   }
   if (!dob) {
     errorStepOne.dob = 'Please enter your date of birth';
