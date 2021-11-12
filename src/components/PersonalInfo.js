@@ -38,7 +38,9 @@ const PersonalInfo = (props) => {
     dispatch({ type: "SET_STEP_ONE", stepOne: { ...temp } });
   };
   const changeStepTwo = (name, value) => {
-    console.log(value);
+    if(name === "phoneNumber") {
+      setErrorStepTwo({ ...errorStepTwo, phoneNumber: false });
+    }
     let temp = stepTwo;
     temp[name] = value;
     dispatch({ type: "SET_STEP_TWO", stepTwo: { ...temp } });
@@ -227,6 +229,7 @@ const PersonalInfo = (props) => {
   };
   const dobChanged = (e) => {
     setDateError();
+    setErrorStepOne({ ...errorStepOne, dob: false });
     if (e.target.value.length === 0) {
       const temp = stepOne;
       temp.dob = "";
@@ -294,8 +297,8 @@ const PersonalInfo = (props) => {
         <Col span={24}>
           {step === 0 && (
             <form>
-              <Row className="">
-                <Col span={8}>
+              <div className="justify-space-between">
+                <Col>
                   <label className={"helper-message m-b-10-px m-t-10-px"}>
                     First Name
                   </label>
@@ -312,7 +315,7 @@ const PersonalInfo = (props) => {
                     </small>
                   )}
                 </Col>
-                <Col span={8}>
+                <Col>
                   <label className={"helper-message m-b-10-px m-t-10-px"}>
                     Middle Name (optional)
                   </label>
@@ -324,7 +327,7 @@ const PersonalInfo = (props) => {
                     value={stepOne.middleName}
                   />
                 </Col>
-                <Col span={8}>
+                <Col>
                   <label className={"helper-message m-b-10-px m-t-10-px"}>
                     Last Name
                   </label>
@@ -341,7 +344,7 @@ const PersonalInfo = (props) => {
                     </small>
                   )}
                 </Col>
-              </Row>
+              </div>
               <Row className="flex column">
                 <label className={"helper-message m-b-10-px m-t-10-px"}>
                   Date of Birth

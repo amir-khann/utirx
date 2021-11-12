@@ -1,8 +1,21 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Image, Card, Collapse } from 'antd';
+import axios from "axios";
+
+import Loader from "./Loader";
+import config from "../config";
 
 const Content = ({ navigate }) => {
-  return (
+  const [price, setPrice] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    (async () => {
+      const { data } = await axios.get(`${config.baseUrl}settings/price`);
+      setPrice(data.price);
+      setIsLoading(false);
+    })();
+  }, []);
+  return isLoading ? <Loader />: (
     <div className="container content">
       <div className="flex">
         <div className="left">
@@ -13,7 +26,7 @@ const Content = ({ navigate }) => {
             <li>Pick up your prescription same-day at your pharmacy or get it discreetly delivered</li>
             <li>No insurance needed</li>
           </ul>
-          <b>$19 visit with Gold membership* • $39 single visit</b>
+          <b>${price} single visit</b>
           <b>Ages 18-65 • Female</b>
           <b className="message-fl">This application is only available to Florida residents and visitors and prescription will be sent to Florida Pharmacies only.</b>
           <Button type="primary" style={{ minWidth: '200px', borderRadius: '5px', marginTop: '10px' }} onClick={() => navigate()}>Get Started</Button>
@@ -28,8 +41,8 @@ const Content = ({ navigate }) => {
         <div className="flex wrap column-on-mobile">
           <div className="left">
             <Card style={{textAlign: 'left', marginRight: '5px'}}>
-              <h4>How Can GoodRx Care Help with UTIs?</h4>
-              <p>Most UTIs respond quickly to treatment with an appropriate antibiotic. GoodRx Care can connect you with providers who can prescribe antibiotics. The exact treatment they prescribe depends on your diagnosis and risk factors. Generally, they prescribe an oral antibiotic like</p>
+              <h4>How Can Online UTI Meds Help with UTIs?</h4>
+              <p>Most UTIs respond quickly to treatment with an appropriate antibiotic. Online UTI Meds can connect you with providers who can prescribe antibiotics. The exact treatment they prescribe depends on your diagnosis and risk factors. Generally, they prescribe an oral antibiotic like</p>
               <ul>
                 <li>Macrobid (Nitrofurantoin)</li>
                 <li>Keflex (Cephalexin)</li>
@@ -54,7 +67,7 @@ const Content = ({ navigate }) => {
         </div>
         <Collapse style={{textAlign: 'left'}} ghost>
           <Collapse.Panel header="Can I get antibiotics for a urinary tract infection (UTI) without seeing a doctor?" key="1">
-            <p>You do not need to visit a provider’s office to be prescribed antibiotics for a urinary tract infection (UTI). Instead, you can speak with a provider online from the comfort of your home, which can help you start treatment sooner, if appropriate. GoodRx Care offers online visits for UTI prescriptions for as low as $39.</p>
+            <p>You do not need to visit a provider’s office to be prescribed antibiotics for a urinary tract infection (UTI). Instead, you can speak with a provider online from the comfort of your home, which can help you start treatment sooner, if appropriate. Online UTI Meds offers online visits for UTI prescriptions for as low as ${price}.</p>
           </Collapse.Panel>
           <Collapse.Panel header="When should I see a doctor for a UTI?" key="2">
             <p>You’ll want to see a provider as soon as you notice symptoms of a urinary tract infection (UTI). A common symptom is pain or burning when you urinate, but you might also feel a frequent urge to urinate even when your bladder is empty. If you start experiencing pain in your back or side, or if you develop a fever, this might be a sign of a more serious infection in your kidneys.</p>
@@ -63,7 +76,7 @@ const Content = ({ navigate }) => {
             <p>Urinary tract infections (UTIs) happen when bacteria is able to get into the urinary tract, causing an infection. Different factors can increase the likelihood of this happening, like sexual activity, changes in hormone levels during menopause, pregnancy, and certain types of birth control.</p>
           </Collapse.Panel>
           <Collapse.Panel header="Can a UTI go away on its own?" key="4">
-            <p>It is best to see a provider if you are experiencing symptoms of a urinary tract infection (UTI). Leaving it untreated may result in a more serious infection that spreads to your kidneys. GoodRx Care offers online visits for UTI so that you can get started on treatment sooner.</p>
+            <p>It is best to see a provider if you are experiencing symptoms of a urinary tract infection (UTI). Leaving it untreated may result in a more serious infection that spreads to your kidneys. Online UTI Meds offers online visits for UTI so that you can get started on treatment sooner.</p>
           </Collapse.Panel>
           <Collapse.Panel header="What are the symptoms of a UTI?" key="5">
             <p>A common symptom of a urinary tract infection (UTI) is a painful or burning sensation when you urinate. You might also feel a frequent urge to pee even when your bladder is empty or notice that your urine looks bloody or cloudy. Sometimes a UTI can spread to your kidneys, causing back or side pain, fever, chills, and nausea.</p>
