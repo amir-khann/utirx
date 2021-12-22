@@ -16,9 +16,9 @@ const Footer = () => {
           <Menu.Item>
             <a href="/terms">Terms of Use</a>
           </Menu.Item>
-          <Menu.Item>
-            <a href="/accessibility">Accessibility</a>
-          </Menu.Item>
+          {/*<Menu.Item>*/}
+          {/*  <a href="/accessibility">Accessibility</a>*/}
+          {/*</Menu.Item>*/}
         </Menu>
       </div>
     </div>

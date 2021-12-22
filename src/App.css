@@ -353,7 +353,7 @@ small {
 
 .chip .allergy {
   margin-right: 5px;
-  
+
 }
 
 .allergy, .close-button {
@@ -551,6 +551,30 @@ form {
 .ant-result-subtitle {
   color:  #000 !important;
 }
+.content-container{
+  padding-left: 10%;
+  padding-right: 10%;
+  padding-bottom: 10%;
+}
+.content-container > h2 {
+  text-align: center;
+}
+.content-container > p {
+  text-align: left;
+  line-height: 15pt
+}
+.content-container > ul > li {
+  line-height: 15pt;
+  padding-top: 10px;
+}
+.content-container > ul > li > span {
+  font-weight: bold;
+  text-decoration: underline;
+}
+.content-container > p > span > span {
+  font-weight: bold;
+}
+
 
 @media only screen and (min-device-width: 280px) and (max-device-width: 550px) and (-webkit-min-device-pixel-ratio: 2) {
   .responsive {
