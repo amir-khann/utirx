@@ -11,12 +11,12 @@ const Footer = () => {
           <h3>&copy; UTI Online - LLC 2021</h3>
         </div>
         <Menu mode="horizontal" style={{borderBottom: '1px solid #FFF'}}>
-          <Menu.Item>
-            <Link to="/marketing" target="_blank" >Authorization for Use and Disclosure of Information</Link>
-          </Menu.Item>
-          <Menu.Item>
-            <Link to="/consent" target="_blank" rel="noreferrer">Telehealth Informed Consent</Link>
-          </Menu.Item>
+          {/*<Menu.Item>*/}
+          {/*  <Link to="/marketing" target="_blank" >Authorization for Use and Disclosure of Information</Link>*/}
+          {/*</Menu.Item>*/}
+          {/*<Menu.Item>*/}
+          {/*  <Link to="/consent" target="_blank" rel="noreferrer">Telehealth Informed Consent</Link>*/}
+          {/*</Menu.Item>*/}
           <Menu.Item>
             <Link to="/privacy" target="_blank" rel="noreferrer">Privacy Policy</Link>
           </Menu.Item>
