@@ -31,7 +31,7 @@ const Consent = (props) => {
       <div className="flex consent-container percent-50">
         <div className="flex  column vh-90 consent">
           <p className="consent-message">
-            <b style={{margin: 0, padding: 0}}>Great! You are almost done.</b> 
+            <b style={{margin: 0, padding: 0}}>Great! You are almost done.</b>
             Here is the summary of your responses.
             Please review these and make sure all of the information below is
             accurate.<br/> If you want to change any of your answers, you can click
@@ -64,9 +64,9 @@ const Consent = (props) => {
               }
               checked={terms}
             >
-              I agree to <Link to="/terms">Terms</Link>,{" "}
-              <Link to="/privacy">Privacy Policy</Link> and{" "}
-              <Link to="/consent">Telehealth Consent</Link>.
+              I agree to <Link to="/terms" target="_blank" style={{zIndex:1}}>Terms</Link>,{" "}
+              <Link to="/privacy" target="_blank">Privacy Policy</Link> and{" "}
+              <Link to="/consent" target="_blank">Telehealth Consent</Link>.
             </Checkbox>
           </div>
           <div>
@@ -77,7 +77,7 @@ const Consent = (props) => {
               checked={marketing}
             >
               I agree to the{" "}
-              <Link to="/marketing">HIPAA Marketing Authorization.</Link>
+              <Link to="/marketing" target="_blank">HIPAA Marketing Authorization.</Link>
             </Checkbox>
           </div>
           <Button

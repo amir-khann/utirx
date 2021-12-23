@@ -19,12 +19,17 @@ const Content = ({ navigate }) => {
     <div className="container content">
       <div className="flex">
         <div className="left">
-          <h1>Get UTI Relief Today</h1>
-          <p>Get a prescription for your UTI after an online visit with a doctor. </p>
+          <h1>Get your UTI Treated Today</h1>
+          <p>Got a UTI ? </p>
+          <p>Get your UTI diagnosed online right now and get a subscription for antibiotics sent straight to your pharmacy - all without the hassle of going to a doctor’s office. </p>
           <ul className="checked-list">
+            {/*<li>Got a UTI?</li>*/}
+            <li>Don’t have time to wait for an appointment with your doc?</li>
             <li>Talk to a provider within minutes</li>
             <li>Pick up your prescription same-day at your pharmacy or get it discreetly delivered</li>
-            <li>No insurance needed</li>
+            <li>It’s fast. It’s easy. There are no hidden fees. And there’s no appointment necessary.</li>
+            <li>No insurance needed. It’s affordable, fast, and easy.</li>
+            <li>Get your UTI diagnosed online right now and get a subscription for antibiotics sent straight to your pharmacy - all without the hassle of going to a doctor’s office.</li>
           </ul>
           <b>${price} single visit</b>
           <b>Ages 18-65 • Female</b>
