@@ -20,7 +20,7 @@ const Content = ({ navigate }) => {
       <div className="flex">
         <div className="left">
           <h1>Get your UTI Treated Today</h1>
-          <p>Got a UTI ? </p>
+          <p>Don’t have time to go to your doctor ? </p>
           <p>Get your UTI diagnosed online right now and get a subscription for antibiotics sent straight to your pharmacy within 24 hours all without the hassle of going to a doctor’s office. </p>
           <ul className="checked-list">
             {/*<li>Got a UTI?</li>*/}
@@ -77,7 +77,7 @@ const Content = ({ navigate }) => {
             <p>Now you do not need to visit a provider’s office to be prescribed antibiotics for a simple urinary tract infection (UTI). Instead, you can be put in contact with a provider online from the comfort of your home, which can help you start treatment sooner.UTIRX.com offers online visits for UTI prescriptions for as low as ${price}.</p>
           </Collapse.Panel>
           <Collapse.Panel header="When should I see a doctor for a UTI?" key="2">
-            <p>You’ll want to see a provider as soon as you notice symptoms of a urinary tract infection (UTI). A common symptom is pain or burning when you urinate, but you might also feel a frequent urge to urinate even when your bladder is empty. If you start experiencing pain in your back or side, or if you develop a fever, this might be a sign of a more serious infection in your kidneys.While we always advise making + seeing a doc in person , we may be able to provide immediate Tx for simple UTIS saving you time the money.</p>
+            <p>You’ll want to see a provider as soon as you notice symptoms of a urinary tract infection (UTI). A common symptom is pain or burning when you urinate, but you might also feel a frequent urge to urinate even when your bladder is empty. If you start experiencing pain in your back or side, or if you develop a fever, this might be a sign of a more serious infection in your kidneys.While we always advise making + seeing a doc in person , we may be able to provide immediate Tx for simple UTIS saving you time + money.</p>
           </Collapse.Panel>
           <Collapse.Panel header="What causes a UTI?" key="3">
             <p>Urinary tract infections (UTIs) happen when bacteria is able to get into the urinary tract, causing an infection. Different factors can increase the likelihood of this happening, like sexual activity, changes in hormone levels during menopause, pregnancy.</p>

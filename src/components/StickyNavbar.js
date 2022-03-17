@@ -6,7 +6,7 @@ const StickyNavbar = () => {
       <div className="container">
         <div className="justify-space-between">
           <div className="logo">
-            <h2>Onlineutimeds.com LLC</h2>
+            {/*<h2>Onlineutimeds.com LLC</h2>*/}
           </div>
         </div>
       </div>
