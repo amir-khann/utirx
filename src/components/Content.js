@@ -25,7 +25,7 @@ const Content = ({ navigate }) => {
           <ul className="checked-list">
             {/*<li>Got a UTI?</li>*/}
             <li>Don’t have time to wait for an appointment with your doc?</li>
-            <li>Get connected to a provider within minutes</li>
+            <li>Get connected to a provider within minutes.</li>
             <li>Pick up your prescription within 24 hours if qualified at your pharmacy.</li>
             <li>It’s fast. It’s easy. There are no hidden fees. And there’s no appointment necessary.</li>
             <li>No insurance needed. It’s affordable, fast, and easy.</li>
@@ -46,7 +46,7 @@ const Content = ({ navigate }) => {
         <div className="flex wrap column-on-mobile">
           <div className="left">
             <Card style={{textAlign: 'left', marginRight: '5px'}}>
-              <h4>How Can Online UTIRX.com Help with UTIs?</h4>
+              <h4>How Can UTIRX.com Help with UTIs?</h4>
               <p>Most UTIs respond quickly to treatment with an appropriate antibiotic. UTIRX.com connect you with providers who can prescribe antibiotics. The exact treatment they prescribe depends on your diagnosis and history.</p>
               <span>Common Antibiotics Include:</span>
               <ul>
@@ -61,7 +61,7 @@ const Content = ({ navigate }) => {
             <Card style={{textAlign: 'left', height: "100%"}}>
               <h4>Is This Service Right For Me?</h4>
               <p>Whether it’s your first UTI or you’ve had several (if so, we’re so sorry!), providers may be able to help.</p>
-              <p>We’ll ask you a series of questions to see if this service is right for you. You will only proceed i we feel that this service will benefit you. If you are a good candidate.</p>
+              <p>We’ll ask you a series of questions to see if this service is right for you. You will only proceed if we feel that this service will benefit you. If you are a good candidate.</p>
             </Card>
           </div>
         </div>
@@ -77,7 +77,7 @@ const Content = ({ navigate }) => {
             <p>Now you do not need to visit a provider’s office to be prescribed antibiotics for a simple urinary tract infection (UTI). Instead, you can be put in contact with a provider online from the comfort of your home, which can help you start treatment sooner.UTIRX.com offers online visits for UTI prescriptions for as low as ${price}.</p>
           </Collapse.Panel>
           <Collapse.Panel header="When should I see a doctor for a UTI?" key="2">
-            <p>You’ll want to see a provider as soon as you notice symptoms of a urinary tract infection (UTI). A common symptom is pain or burning when you urinate, but you might also feel a frequent urge to urinate even when your bladder is empty. If you start experiencing pain in your back or side, or if you develop a fever, this might be a sign of a more serious infection in your kidneys.While we always advise making + seeing a doc in person , we may be able to provide immediate Tx for simple UTIS saving you time + money.</p>
+            <p>You’ll want to see a provider as soon as you notice symptoms of a urinary tract infection (UTI). A common symptom is pain or burning when you urinate, but you might also feel a frequent urge to urinate even when your bladder is empty. If you start experiencing pain in your back or side, or if you develop a fever, this might be a sign of a more serious infection in your kidneys.While we always advise making an appointment + seeing a doc in person , we may be able to provide immediate Tx for simple UTIS saving you time + money.</p>
           </Collapse.Panel>
           <Collapse.Panel header="What causes a UTI?" key="3">
             <p>Urinary tract infections (UTIs) happen when bacteria is able to get into the urinary tract, causing an infection. Different factors can increase the likelihood of this happening, like sexual activity, changes in hormone levels during menopause, pregnancy.</p>
