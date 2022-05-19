@@ -6,10 +6,14 @@
 }
 .logo{
   padding-top: 47px;
+  display: flex;
+  align-items: center;
 }
 .logo span{
   font-size: 32px;
   margin-left: 13px;
+  font-weight: 600;
+  margin-top: 2%;
 }
 .hero-content{
   max-width: 556px;
@@ -23,23 +27,24 @@
 }
 .hero-content h1{
   margin-top: 98px;
-  font-size: 3em;
+  font-size: 48px;
+  line-height: 72px;
   font-weight: 600;
   font-family: 'Poppins', sans-serif;
 }
 .hero-content h4{
   font-weight: bold;
   font-size: 1.25em;
-  margin-top: 3em;
+  margin-block: 1em;
 }
 .hero-content p {
-  margin-bottom: 3.56em;
+  margin-bottom: 2.56em;
     font-size: 18px;
     line-height: 27px;
   font-family: 'Raleway', sans-serif !important;
 }
 .hero-section .left{
-  text-align: center;
+  text-align: end;
 }
 .hero-btn{
   background-color:#0A91BF;
@@ -60,48 +65,63 @@
 }
 .feature-content{
   display: flex !important;
-  flex-direction: row;
-  justify-content: space-between;
-  /* display: flex !important; */
   align-items: center;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
 }
 
 .feature-content p{
   font-size: 12px;
-  width: 70%;
+  /* width: 88%; */
   line-height: 20px;
-    font-family: 'Raleway', sans-serif !important;
+  font-family: 'Raleway', sans-serif !important;
 }
 .feature-content h2{
   font-size: 18px;
   font-weight: 500;
-
+  font-family: 'Poppins', sans-serif;
 }
 .frequently{
-  padding-inline: 4em;
+  padding-inline: 4.5em;
 }
 .frequently h1{
   margin-top: 121px;
   margin-bottom: 63px;
   font-size: 48px;
   font-weight: 600;
-  line-height: 28px;
 }
 .frequently h2{
   font-size: 16px;
   font-weight: 600;
+  margin-bottom: 36px;
+  font-family: 'Poppins', sans-serif;
+}
+.frequently p{
+  font-size: 14px;
+  font-weight: 400;
+  font-family: 'Raleway', sans-serif !important;
 }
 .read-more{
   color: #0C90BD ;
   border: none;
   background: transparent;
   cursor: pointer;
+  font-size: 12px;
+   font-family: 'Raleway', sans-serif !important;
 }
 
 .footer-btn{
   text-align: center;
   padding-top: 6em;
   padding-bottom: 292px;
+}
+@media screen and (max-width: 1024px) {
+  .hero-section .left{
+    display: none;
+  }
+   .hero-btn{
+        margin-bottom: 20px;
+  }
 }
 @media screen and (max-width: 768px) {
   .hero-section h1{
@@ -318,7 +338,7 @@ small {
 /* container */
 .container {
   box-sizing: border-box;
-  padding-inline: 5%;
+  padding-inline: 5.6%;
   margin-left: auto;
   margin-right: auto;
 }

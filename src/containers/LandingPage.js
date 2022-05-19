@@ -1,9 +1,9 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 
-import StickyNavbar from "../components/StickyNavbar";
-import Content from "../components/Content";
-import Footer from "../components/Footer";
+// import StickyNavbar from "../components/StickyNavbar";
+// import Content from "../components/Content";
+// import Footer from "../components/Footer";
 import "../App.css";
 import Test from "../components/Test";
 const LandingPage = () => {

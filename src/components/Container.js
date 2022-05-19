@@ -1,6 +1,7 @@
 import React from "react";
 import { Layout } from "antd";
 import { Link } from "react-router-dom";
+import { ReactComponent as Logo } from "../assets/svgs/white-logo.svg";
 const { Content, Header } = Layout;
 
 const Container = (props) => {
@@ -8,8 +9,9 @@ const Container = (props) => {
     <Layout>
       <Header style={{ position: "sticky", top: 0, zIndex: 1 }}>
         <Link to="/" className="logo-app">
-          <img src="vector.png" alt="pharmacy" height={40} /> Onlineutimeds.com
-          LLC{" "}
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <Logo /> UTIRX.com
+          </div>
         </Link>
       </Header>
       <Content>{props.children}</Content>
