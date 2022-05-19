@@ -8,7 +8,7 @@ const Footer = () => {
     <div className="container">
       <div className="flex justify-space-between column-on-mobile">
         <div className="logo">
-          <h3>&copy; UTI Online - LLC 2021</h3>
+          <h3>&copy; UTI RX - LLC 2022</h3>
         </div>
         <Menu mode="horizontal" style={{borderBottom: '1px solid #FFF'}}>
           {/*<Menu.Item>*/}
