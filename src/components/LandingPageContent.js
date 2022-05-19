@@ -12,15 +12,15 @@ import Loader from "./Loader";
 import config from "../config";
 import questions from "./questions";
 
-const Test = ({ navigate }) => {
-  const [price, setPrice] = useState(0);
+const LandingPageContent = ({ navigate }) => {
   const [key, setKey] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [content, setContent] = useState([]);
 
   useEffect(() => {
     (async () => {
       const { data } = await axios.get(`${config.baseUrl}settings/price`);
-      setPrice(data.price);
+      setContent(questions(data.price));
       setIsLoading(false);
     })();
   }, []);
@@ -117,15 +117,15 @@ const Test = ({ navigate }) => {
         <div className="frequently">
           <h1>Frequently Asked</h1>
           <Row gutter={[32, 48]} justify="space-between">
-            {questions &&
-              questions.map((qu, index) => (
+            {content &&
+              content.map((qu, index) => (
                 <Col sm={24} md={10}>
                   <h2>{qu.question}</h2>
                   <p className={index === key && "animation"}>
                     {index === key
                       ? qu.answer
-                      : qu.answer.length > 100
-                      ? qu.answer.slice(0, 99) + "......."
+                      : qu.answer.length > 200
+                      ? qu.answer.slice(0, 199) + "......."
                       : qu.answer}
                   </p>
                   {qu.answer.length > 100 && (
@@ -176,4 +176,4 @@ const Test = ({ navigate }) => {
   );
 };
 
-export default Test;
+export default LandingPageContent;
