@@ -7,7 +7,7 @@ const { Content, Header } = Layout;
 const Container = (props) => {
   return (
     <Layout>
-      <Header style={{ position: "sticky", top: 0, zIndex: 1 }}>
+      <Header style={{ position: "sticky", top: 0, zIndex: 1,background:"#0A91BF" }}>
         <Link to="/" className="logo-app">
           <div style={{ display: "flex", alignItems: "center" }}>
             <Logo /> UTIRX.com

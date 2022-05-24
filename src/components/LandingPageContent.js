@@ -31,7 +31,8 @@ const LandingPageContent = ({ navigate }) => {
       <div className="container content">
         <div className="logo">
           {/* <img src="vector.png" alt="logo" /> */}
-          <Logo />
+          
+          <div className="logo-img"><Logo/></div>
           <span>UTIRX</span>
         </div>
         <div className="flex hero-section justify-space-between ">
@@ -55,12 +56,13 @@ const LandingPageContent = ({ navigate }) => {
       </div>
       <div className="container-wrapper">
         <div className="container">
-          <Row gutter={[16, 16]} justify={"space-between"}>
+          <Row className="feature-wrapper" gutter={[16, 16]} justify={"space-between"}>
             <Col
               sm={24}
               md={12}
               xl={4}
-              className="feature-content"
+              className="feature-content feature"
+              
               style={{ marginBottom: "20px" }}
             >
               <div style={{ width: 52, marginRight: "2%" }}>
@@ -99,7 +101,7 @@ const LandingPageContent = ({ navigate }) => {
               sm={24}
               md={12}
               xl={4}
-              className="feature-content"
+              className="feature-content feature"
               style={{ marginBottom: "20px" }}
             >
               <div style={{ width: 52, marginRight: "2%" }}>
