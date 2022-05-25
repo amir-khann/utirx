@@ -908,6 +908,10 @@ form {
   }
   .logo span{
     font-size: 24px;
+    margin-left: 7px;
+  }
+  .logo-img{
+    width: 43px;
   }
  
   .hero-content h4{

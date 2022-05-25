@@ -65,7 +65,7 @@ const LandingPageContent = ({ navigate }) => {
               
               style={{ marginBottom: "20px" }}
             >
-              <div style={{ width: 52, marginRight: "2%" }}>
+              <div style={{ width: 52, marginRight: "5%" }}>
                 <Connect />
               </div>
               <div>
@@ -74,7 +74,7 @@ const LandingPageContent = ({ navigate }) => {
               </div>
             </Col>
             <Col sm={24} md={12} xl={4} className="feature-content">
-              <div style={{ width: 52, marginRight: "2%" }}>
+              <div style={{ width: 52, marginRight: "5%" }}>
                 <Pick />
               </div>
               <div>
@@ -86,7 +86,7 @@ const LandingPageContent = ({ navigate }) => {
               </div>
             </Col>
             <Col sm={24} md={12} xl={4} className="feature-content">
-              <div style={{ width: 52, marginRight: "2%" }}>
+              <div style={{ width: 52, marginRight: "5%" }}>
                 <VectorTwo />
               </div>
               <div>
@@ -104,7 +104,7 @@ const LandingPageContent = ({ navigate }) => {
               className="feature-content feature"
               style={{ marginBottom: "20px" }}
             >
-              <div style={{ width: 52, marginRight: "2%" }}>
+              <div style={{ width: 52, marginRight: "5%" }}>
                 <Clock />
               </div>
               <div>

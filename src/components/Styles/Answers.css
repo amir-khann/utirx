@@ -11,7 +11,7 @@
   color: #444;
   border-radius: 5px;
   padding: 10px 20px;
-  border: 2px solid #6B63FF32;
+  border: 2px solid #1ca7d532;
   margin-bottom: 5px;
   cursor: pointer;
 }
@@ -25,7 +25,7 @@
   width: 20px;
   height: 20px;
   border-radius: 3px;
-  background: lighten(#6B63FF, 15%);
+  background: lighten(#0A91BF, 15%);
 }
 
 .radiobtn label::before {
@@ -54,10 +54,10 @@ input[type="radio"] + label {
 }
 
 input[type="radio"]:checked + label {
-  background: #B8B0FF;
+  background: #28b3e2;
   animation-name: blink;
   animation-duration: 1s;
-  border-color: #6B63FF;
+  border-color: #0A91BF;
   color: #FFF;
 }
 
@@ -67,35 +67,35 @@ input[type="radio"]:checked + label::before {
 }
 
 input[type="radio"]:checked + label::after {
-  background: #6B63FF;
+  background: #0A91BF;
 }
 
 @keyframes blink {
 	0% {
-		background-color: lighten(#6B63FF, 15%);
+		background-color: lighten(#0A91BF, 15%);
 	}
 	10% {
-		background-color: lighten(#6B63FF, 15%);
+		background-color: lighten(#0A91BF, 15%);
 	}
 	11% {
-		background-color: lighten(#6B63FF, 20%);
+		background-color: lighten(#0A91BF, 20%);
 	}
 	29% {
-		background-color: lighten(#6B63FF, 20%);
+		background-color: lighten(#0A91BF, 20%);
 	}
 	30% {
-		background-color: lighten(#6B63FF, 15%);
+		background-color: lighten(#0A91BF, 15%);
 	}
 	50% {
-		background-color: lighten(#6B63FF, 20%);
+		background-color: lighten(#0A91BF, 20%);
 	}
 	45% {
-		background-color: lighten(#6B63FF, 15%);
+		background-color: lighten(#0A91BF, 15%);
 	}
 	50% {
-		background-color: lighten(#6B63FF, 20%);
+		background-color: lighten(#0A91BF, 20%);
 	}
 	100% {
-		background-color: lighten(#6B63FF, 15%);
+		background-color: lighten(#0A91BF, 15%);
 	}
 }
