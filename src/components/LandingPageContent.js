@@ -7,7 +7,7 @@ import { ReactComponent as Pick } from "../assets/svgs/pick.svg";
 import { ReactComponent as Connect } from "../assets/svgs/connected.svg";
 import { ReactComponent as Logo } from "../assets/svgs/logo.svg";
 import { ReactComponent as ArrowDown } from "../assets/svgs/arrowdown.svg";
-// import { ReactComponent as Women } from "../assets/svgs/women.svg";
+import { ReactComponent as Women } from "../assets/svgs/women.svg";
 import Loader from "./Loader";
 import config from "../config";
 import questions from "./questions";
@@ -31,8 +31,10 @@ const LandingPageContent = ({ navigate }) => {
       <div className="container content">
         <div className="logo">
           {/* <img src="vector.png" alt="logo" /> */}
-          
-          <div className="logo-img"><Logo/></div>
+
+          <div className="logo-img">
+            <Logo />
+          </div>
           <span>UTIRX</span>
         </div>
         <div className="flex hero-section justify-space-between ">
@@ -44,9 +46,14 @@ const LandingPageContent = ({ navigate }) => {
               antibiotics sent straight to your pharmacy within 24 hours all
               without the hassle of going to a doctor’s office.
             </p>
-            <button className="hero-btn" onClick={() => navigate()}>
-              Get Started
-            </button>
+            <div className="mobileimage">
+              <img src="pngwing.png" alt="" />
+            </div>
+            <div className="btn-wrapper">
+              <button className="hero-btn" onClick={() => navigate()}>
+                Get Started
+              </button>
+            </div>
           </div>
           <div className="left">
             {/* <Women /> */}
@@ -56,13 +63,16 @@ const LandingPageContent = ({ navigate }) => {
       </div>
       <div className="container-wrapper">
         <div className="container">
-          <Row className="feature-wrapper" gutter={[16, 16]} justify={"space-between"}>
+          <Row
+            className="feature-wrapper"
+            gutter={[16, 16]}
+            justify={"space-between"}
+          >
             <Col
               sm={24}
               md={12}
               xl={4}
               className="feature-content feature"
-              
               style={{ marginBottom: "20px" }}
             >
               <div style={{ width: 52, marginRight: "5%" }}>
@@ -74,7 +84,7 @@ const LandingPageContent = ({ navigate }) => {
               </div>
             </Col>
             <Col sm={24} md={12} xl={4} className="feature-content">
-              <div style={{ width: 52, marginRight: "5%" }}>
+              <div className="pick" style={{ width: 52, marginRight: "5%" }}>
                 <Pick />
               </div>
               <div>
