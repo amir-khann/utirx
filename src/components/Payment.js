@@ -105,7 +105,7 @@ const Form = (props) => {
           Credit Card
         </label>
         <CardElement options={{ ...createOptions(), hidePostalCode: true }} />
-        <small className="description-message">{`* You will be charged $${price} and your credit card statement will show "OnlineUTIMeds.com LLC" as a merchant name`}</small>
+        <small className="description-message">{`* You will be charged $${price} and your credit card statement will show "UTIRX.com LLC" as a merchant name`}</small>
         <Button
           type="primary"
           disabled={!stripe || loading}
