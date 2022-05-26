@@ -151,7 +151,7 @@ const LandingPageContent = ({ navigate }) => {
                         >
                           Show less
                           <img
-                            src="vectorup.png"
+                            src="Vectorup.png"
                             alt="arrow"
                             style={{ marginLeft: "6px" }}
                           />
